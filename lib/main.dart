@@ -7,7 +7,8 @@ void main() {
     GetMaterialApp(
       title: 'Aquarius Store',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.blue[200],
+        accentColor: Colors.purple[200],
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: {
