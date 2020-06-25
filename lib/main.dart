@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 void main() {
   runApp(
     GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Aquarius Store',
       theme: ThemeData(
         primaryColor: Colors.blue[200],
