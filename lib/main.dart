@@ -1,6 +1,9 @@
 import 'package:aquariusstore/views/home.dart';
+import 'package:aquariusstore/views/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'utils/routes.dart';
 
 void main() {
   runApp(
@@ -13,9 +16,10 @@ void main() {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: {
-        '/': (_) => Home(),
+        Routes.HOME: (_) => Home(),
+        Routes.SPLASH: (_) => Splash(),
       },
-      initialRoute: '/',
+      initialRoute: Routes.SPLASH,
     ),
   );
 }
