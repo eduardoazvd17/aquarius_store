@@ -14,7 +14,7 @@ class _SplashState extends State<Splash> {
     super.initState();
     Future.delayed(Duration(seconds: 2)).then(
       (value) => Get.offAllNamed(
-        Routes.HOME,
+        Routes.NAVIGATION,
       ),
     );
   }

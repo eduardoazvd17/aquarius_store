@@ -1,4 +1,4 @@
-import 'package:aquariusstore/views/home.dart';
+import 'package:aquariusstore/views/navigation.dart';
 import 'package:aquariusstore/views/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,11 +15,12 @@ void main() async {
       theme: ThemeData(
         primaryColor: Colors.blue[200],
         accentColor: Colors.purple[200],
+        scaffoldBackgroundColor: Colors.blue[200],
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: {
         Routes.SPLASH: (_) => Splash(),
-        Routes.HOME: (_) => Home(),
+        Routes.NAVIGATION: (_) => Navigation(),
       },
       initialRoute: Routes.SPLASH,
     ),
