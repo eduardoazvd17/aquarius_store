@@ -9,10 +9,6 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Theme.of(context).primaryColor,
-        ),
-        elevation: 0,
         centerTitle: true,
         title: Text('Aquarius Store'),
         actions: <Widget>[
@@ -34,6 +30,7 @@ class Home extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
+                  SizedBox(height: 10),
                   Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: cnt.maxWidth * 0.05),

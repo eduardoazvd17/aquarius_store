@@ -13,6 +13,10 @@ void main() async {
         primaryColor: Colors.blue[200],
         accentColor: Colors.purple[200],
         appBarTheme: AppBarTheme(
+          iconTheme: IconThemeData(
+            color: Colors.blue[200],
+          ),
+          elevation: 0,
           color: ThemeData().scaffoldBackgroundColor,
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
