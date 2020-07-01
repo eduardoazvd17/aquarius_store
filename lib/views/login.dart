@@ -20,6 +20,7 @@ class _LoginState extends State<Login> {
                 padding: EdgeInsets.symmetric(horizontal: cnt.maxWidth * 0.05),
                 child: Center(
                   child: Card(
+                    elevation: 3,
                     child: Padding(
                       padding: EdgeInsets.all(20),
                       child: Column(
