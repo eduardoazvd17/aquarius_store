@@ -14,7 +14,7 @@ class MainDrawer extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Container(
-                  height: cnt.maxHeight * 0.2,
+                  height: cnt.maxHeight * 0.234,
                   width: cnt.maxWidth,
                   color: Theme.of(context).primaryColor,
                   child: Padding(
@@ -48,7 +48,7 @@ class MainDrawer extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  height: cnt.maxHeight * 0.8,
+                  height: cnt.maxHeight * 0.766,
                   width: cnt.maxWidth,
                   child: Column(
                     children: <Widget>[
