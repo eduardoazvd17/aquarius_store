@@ -29,27 +29,18 @@ class MainDrawer extends StatelessWidget {
                           'Olá visitante',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 16,
+                            fontSize: 22,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         InkWell(
                           onTap: () => Get.to(Login()),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'Minha Conta',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                              ),
-                            ],
+                          child: Text(
+                            'Entre ou Cadastre-se',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ],
@@ -60,7 +51,24 @@ class MainDrawer extends StatelessWidget {
                   height: cnt.maxHeight * 0.8,
                   width: cnt.maxWidth,
                   child: Column(
-                    children: <Widget>[],
+                    children: <Widget>[
+                      SizedBox(height: 10),
+                      ListTile(
+                        leading: Icon(Icons.home),
+                        title: Text('Início'),
+                      ),
+                      Divider(),
+                      ListTile(
+                        leading: Icon(Icons.shop),
+                        title: Text('Produtos'),
+                      ),
+                      Divider(),
+                      ListTile(
+                        leading: Icon(Icons.person),
+                        title: Text('Minha Conta'),
+                      ),
+                      Divider(),
+                    ],
                   ),
                 ),
               ],
