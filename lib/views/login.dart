@@ -8,6 +8,25 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool isLogin = true;
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passController = TextEditingController();
+  final passConfirmController = TextEditingController();
+
+  _sendForm() {
+    if (isLogin) {
+      String email = emailController.text;
+      String pass = passController.text;
+      //Entrar
+    } else {
+      String name = nameController.text;
+      String email = emailController.text;
+      String pass = passController.text;
+      String passConfirm = passConfirmController.text;
+      //Cadastro
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,12 +36,13 @@ class _LoginState extends State<Login> {
           return Center(
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: cnt.maxWidth * 0.05),
+                padding: EdgeInsets.symmetric(horizontal: cnt.maxWidth * 0.02),
                 child: Center(
                   child: Card(
                     elevation: 3,
                     child: Padding(
-                      padding: EdgeInsets.all(20),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 20, horizontal: 15),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
@@ -42,7 +62,7 @@ class _LoginState extends State<Login> {
                                     SizedBox(height: 11),
                                     Text(
                                       isLogin
-                                          ? 'Entre com sua conta'
+                                          ? 'Entre com a sua conta'
                                           : 'Cadastre-se',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
@@ -57,7 +77,9 @@ class _LoginState extends State<Login> {
                           SizedBox(height: 10),
                           Divider(),
                           !isLogin
-                              ? TextField(
+                              ? TextFormField(
+                                  controller: nameController,
+                                  textCapitalization: TextCapitalization.words,
                                   decoration: InputDecoration(
                                     labelText: 'Nome Completo',
                                     suffixIcon: Icon(Icons.person),
@@ -65,14 +87,19 @@ class _LoginState extends State<Login> {
                                 )
                               : Container(),
                           SizedBox(height: !isLogin ? 10 : 0),
-                          TextField(
+                          TextFormField(
+                            controller: emailController,
+                            autocorrect: false,
+                            keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               labelText: 'E-mail',
                               suffixIcon: Icon(Icons.mail),
                             ),
                           ),
                           SizedBox(height: 10),
-                          TextField(
+                          TextFormField(
+                            controller: passController,
+                            autocorrect: false,
                             obscureText: true,
                             decoration: InputDecoration(
                               labelText: 'Senha',
@@ -81,7 +108,9 @@ class _LoginState extends State<Login> {
                           ),
                           SizedBox(height: 10),
                           !isLogin
-                              ? TextField(
+                              ? TextFormField(
+                                  controller: passConfirmController,
+                                  autocorrect: false,
                                   obscureText: true,
                                   decoration: InputDecoration(
                                     labelText: 'Confirmação de Senha',
@@ -95,6 +124,7 @@ class _LoginState extends State<Login> {
                             children: <Widget>[
                               isLogin
                                   ? FlatButton(
+                                      padding: EdgeInsets.zero,
                                       onPressed: () {},
                                       child: Text('Esqueci minha senha'),
                                     )
@@ -105,7 +135,7 @@ class _LoginState extends State<Login> {
                                   borderRadius: BorderRadius.circular(18.0),
                                 ),
                                 textColor: Colors.white,
-                                onPressed: () {},
+                                onPressed: _sendForm,
                                 child: Text(
                                     isLogin ? 'Entrar' : 'Efetuar Cadastro'),
                               ),
