@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "246544856294",
+    "firebase_url": "https://aquariusstore-20.firebaseio.com",
+    "project_id": "aquariusstore-20",
+    "storage_bucket": "aquariusstore-20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:246544856294:android:282f616e79051fcbf43727",
+        "android_client_info": {
+          "package_name": "com.eduardoazevedo.aquariusstore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "246544856294-t4m8d0r6tv7vm2950c3n42akv5fnal4a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfGivXt4ecE1ZoFrDyenUGpU5n4oR0tCs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "246544856294-t4m8d0r6tv7vm2950c3n42akv5fnal4a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
