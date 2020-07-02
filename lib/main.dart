@@ -1,4 +1,4 @@
-import 'package:aquariusstore/views/home.dart';
+import 'package:aquariusstore/views/nav_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -21,7 +21,7 @@ void main() async {
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Home(),
+      home: NavPage(),
     ),
   );
 }

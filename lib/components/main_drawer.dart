@@ -1,3 +1,4 @@
+import 'package:aquariusstore/components/drawer_tile.dart';
 import 'package:aquariusstore/views/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -53,21 +54,22 @@ class MainDrawer extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       SizedBox(height: 10),
-                      ListTile(
-                        leading: Icon(Icons.home),
-                        title: Text('Início'),
+                      DrawerTile(
+                        iconData: Icons.home,
+                        title: 'Início',
                       ),
-                      Divider(),
-                      ListTile(
-                        leading: Icon(Icons.shop),
-                        title: Text('Produtos'),
+                      DrawerTile(
+                        iconData: Icons.list,
+                        title: 'Produtos',
                       ),
-                      Divider(),
-                      ListTile(
-                        leading: Icon(Icons.person),
-                        title: Text('Minha Conta'),
+                      DrawerTile(
+                        iconData: Icons.playlist_add_check,
+                        title: 'Meus Pedidos',
                       ),
-                      Divider(),
+                      DrawerTile(
+                        iconData: Icons.location_on,
+                        title: 'Lojas',
+                      ),
                     ],
                   ),
                 ),
