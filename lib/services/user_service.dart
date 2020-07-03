@@ -19,7 +19,7 @@ class UserService {
       return null;
     } else {
       var u = User.fromJson(user.data['data']);
-      if (u.password == password) {
+      if (u.password.toUpperCase() == password) {
         return u;
       } else {
         return null;

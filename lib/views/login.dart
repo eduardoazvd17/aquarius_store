@@ -13,6 +13,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool isLogin = true;
+  bool isLoading = false;
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passController = TextEditingController();
@@ -31,6 +32,9 @@ class _LoginState extends State<Login> {
         );
         return;
       }
+      setState(() {
+        isLoading = true;
+      });
       var user = await us.login(email: email, password: pass);
       if (user == null) {
         Get.snackbar(
@@ -38,9 +42,13 @@ class _LoginState extends State<Login> {
           'Senha incorreta ou usuário não cadastrado.',
           backgroundColor: Theme.of(context).errorColor,
         );
+        setState(() {
+          isLoading = false;
+        });
         return;
       } else {
         //TODO: Login efetuado.
+        Get.close(1);
       }
     } else {
       String name = nameController.text;
@@ -71,6 +79,9 @@ class _LoginState extends State<Login> {
         );
         return;
       }
+      setState(() {
+        isLoading = true;
+      });
       var user = User(
         fullName: name,
         email: email,
@@ -79,12 +90,16 @@ class _LoginState extends State<Login> {
       bool status = await us.register(user);
       if (status) {
         //TODO: cadastro efetuado
+        Get.close(1);
       } else {
         Get.snackbar(
           'Cadastro não efetuado',
           'Este e-mail já esta cadastrado em nosso sistema.',
           backgroundColor: Theme.of(context).errorColor,
         );
+        setState(() {
+          isLoading = false;
+        });
         return;
       }
     }
@@ -101,141 +116,156 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      body: SafeArea(child: LayoutBuilder(
-        builder: (ctx, cnt) {
-          return Center(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: cnt.maxWidth * 0.02),
-                child: Center(
-                  child: Card(
-                    elevation: 3,
+      body: isLoading
+          ? Center(
+              child: CircularProgressIndicator(
+                valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            )
+          : SafeArea(child: LayoutBuilder(
+              builder: (ctx, cnt) {
+                return Center(
+                  child: SingleChildScrollView(
                     child: Padding(
                       padding:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Stack(
-                            children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: IconButton(
-                                  icon: Icon(Icons.arrow_back_ios),
-                                  onPressed: () => Get.close(1),
-                                ),
-                              ),
-                              Center(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    SizedBox(height: 11),
-                                    Text(
-                                      isLogin
-                                          ? 'Entre com a sua conta'
-                                          : 'Cadastre-se',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
+                          EdgeInsets.symmetric(horizontal: cnt.maxWidth * 0.02),
+                      child: Center(
+                        child: Card(
+                          elevation: 3,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 15),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Stack(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: IconButton(
+                                        icon: Icon(Icons.arrow_back_ios),
+                                        onPressed: () => Get.close(1),
+                                      ),
+                                    ),
+                                    Center(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          SizedBox(height: 11),
+                                          Text(
+                                            isLogin
+                                                ? 'Entre com a sua conta'
+                                                : 'Cadastre-se',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                          Divider(),
-                          !isLogin
-                              ? TextFormField(
-                                  controller: nameController,
-                                  textCapitalization: TextCapitalization.words,
+                                SizedBox(height: 10),
+                                Divider(),
+                                !isLogin
+                                    ? TextFormField(
+                                        controller: nameController,
+                                        textCapitalization:
+                                            TextCapitalization.words,
+                                        decoration: InputDecoration(
+                                          labelText: 'Nome Completo',
+                                          suffixIcon: Icon(Icons.person),
+                                        ),
+                                      )
+                                    : Container(),
+                                SizedBox(height: !isLogin ? 10 : 0),
+                                TextFormField(
+                                  controller: emailController,
+                                  autocorrect: false,
+                                  keyboardType: TextInputType.emailAddress,
                                   decoration: InputDecoration(
-                                    labelText: 'Nome Completo',
-                                    suffixIcon: Icon(Icons.person),
+                                    labelText: 'E-mail',
+                                    suffixIcon: Icon(Icons.mail),
                                   ),
-                                )
-                              : Container(),
-                          SizedBox(height: !isLogin ? 10 : 0),
-                          TextFormField(
-                            controller: emailController,
-                            autocorrect: false,
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                              labelText: 'E-mail',
-                              suffixIcon: Icon(Icons.mail),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          TextFormField(
-                            controller: passController,
-                            autocorrect: false,
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              labelText: 'Senha',
-                              suffixIcon: Icon(Icons.vpn_key),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          !isLogin
-                              ? TextFormField(
-                                  controller: passConfirmController,
+                                ),
+                                SizedBox(height: 10),
+                                TextFormField(
+                                  controller: passController,
                                   autocorrect: false,
                                   obscureText: true,
                                   decoration: InputDecoration(
-                                    labelText: 'Confirmação de Senha',
+                                    labelText: 'Senha',
                                     suffixIcon: Icon(Icons.vpn_key),
                                   ),
-                                )
-                              : Container(),
-                          SizedBox(height: !isLogin ? 10 : 0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              isLogin
-                                  ? FlatButton(
-                                      padding: EdgeInsets.zero,
-                                      onPressed: () {},
-                                      child: Text('Esqueci minha senha'),
-                                    )
-                                  : Container(),
-                              FlatButton(
-                                color: Theme.of(context).accentColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
                                 ),
-                                textColor: Colors.white,
-                                onPressed: _sendForm,
-                                child: Text(
-                                    isLogin ? 'Entrar' : 'Efetuar Cadastro'),
-                              ),
-                            ],
+                                SizedBox(height: 10),
+                                !isLogin
+                                    ? TextFormField(
+                                        controller: passConfirmController,
+                                        autocorrect: false,
+                                        obscureText: true,
+                                        decoration: InputDecoration(
+                                          labelText: 'Confirmação de Senha',
+                                          suffixIcon: Icon(Icons.vpn_key),
+                                        ),
+                                      )
+                                    : Container(),
+                                SizedBox(height: !isLogin ? 10 : 0),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    isLogin
+                                        ? FlatButton(
+                                            padding: EdgeInsets.zero,
+                                            onPressed: () {},
+                                            child: Text('Esqueci minha senha'),
+                                          )
+                                        : Container(),
+                                    FlatButton(
+                                      color: Theme.of(context).accentColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(18.0),
+                                      ),
+                                      textColor: Colors.white,
+                                      onPressed: _sendForm,
+                                      child: Text(
+                                        isLogin ? 'Entrar' : 'Efetuar Cadastro',
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    FlatButton(
+                                      onPressed: () {
+                                        nameController.clear();
+                                        emailController.clear();
+                                        passController.clear();
+                                        passConfirmController.clear();
+                                        setState(() {
+                                          isLogin = !isLogin;
+                                        });
+                                      },
+                                      child: Text(isLogin
+                                          ? 'Ainda não possui uma conta?'
+                                          : 'Já possui uma conta?'),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              FlatButton(
-                                onPressed: () {
-                                  setState(() {
-                                    isLogin = !isLogin;
-                                  });
-                                },
-                                child: Text(isLogin
-                                    ? 'Ainda não possui uma conta?'
-                                    : 'Já possui uma conta?'),
-                              ),
-                            ],
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
-            ),
-          );
-        },
-      )),
+                );
+              },
+            )),
     );
   }
 }
