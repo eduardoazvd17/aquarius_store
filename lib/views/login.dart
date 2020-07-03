@@ -14,6 +14,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   bool isLogin = true;
   bool isLoading = false;
+
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passController = TextEditingController();
