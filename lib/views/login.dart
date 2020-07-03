@@ -145,7 +145,15 @@ class _LoginState extends State<Login> {
                                       alignment: Alignment.centerLeft,
                                       child: IconButton(
                                         icon: Icon(Icons.arrow_back_ios),
-                                        onPressed: () => Get.close(1),
+                                        onPressed: () {
+                                          if (!isLogin) {
+                                            setState(() {
+                                              isLogin = true;
+                                            });
+                                          } else {
+                                            Get.close(1);
+                                          }
+                                        },
                                       ),
                                     ),
                                     Center(
@@ -238,25 +246,27 @@ class _LoginState extends State<Login> {
                                     ),
                                   ],
                                 ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    FlatButton(
-                                      onPressed: () {
-                                        nameController.clear();
-                                        emailController.clear();
-                                        passController.clear();
-                                        passConfirmController.clear();
-                                        setState(() {
-                                          isLogin = !isLogin;
-                                        });
-                                      },
-                                      child: Text(isLogin
-                                          ? 'Ainda não possui uma conta?'
-                                          : 'Já possui uma conta?'),
-                                    ),
-                                  ],
-                                ),
+                                isLogin
+                                    ? Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          FlatButton(
+                                            onPressed: () {
+                                              nameController.clear();
+                                              emailController.clear();
+                                              passController.clear();
+                                              passConfirmController.clear();
+                                              setState(() {
+                                                isLogin = !isLogin;
+                                              });
+                                            },
+                                            child: Text(
+                                                'Ainda não possui uma conta?'),
+                                          ),
+                                        ],
+                                      )
+                                    : Container(),
                               ],
                             ),
                           ),
