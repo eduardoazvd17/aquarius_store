@@ -23,35 +23,53 @@ class _LoginState extends State<Login> {
     if (isLogin) {
       String email = emailController.text;
       String pass = _generateMD5(passController.text);
+      if (!GetUtils.isEmail(email)) {
+        Get.snackbar(
+          'E-mail inválido',
+          'Endereço de e-mail inválido.',
+          backgroundColor: Theme.of(context).errorColor,
+        );
+        return;
+      }
       var user = await us.login(email: email, password: pass);
       if (user == null) {
         Get.snackbar(
           'Credenciais incorretas',
           'Senha incorreta ou usuário não cadastrado.',
-          backgroundColor: Colors.red[300],
+          backgroundColor: Theme.of(context).errorColor,
         );
+        return;
       } else {
         //TODO: Login efetuado.
-        print('login efetuado');
       }
     } else {
       String name = nameController.text;
       String email = emailController.text;
       String pass = _generateMD5(passController.text);
       String passConfirm = _generateMD5(passConfirmController.text);
+      if (!GetUtils.isEmail(email)) {
+        Get.snackbar(
+          'E-mail inválido',
+          'Endereço de e-mail inválido.',
+          backgroundColor: Theme.of(context).errorColor,
+        );
+        return;
+      }
       if (passController.text.isEmpty || passController.text.length < 6) {
         Get.snackbar(
           'Senha inválida',
           'O tamanho da sua senha deve maior ou igual a 6 caracteres.',
-          backgroundColor: Colors.red[300],
+          backgroundColor: Theme.of(context).errorColor,
         );
+        return;
       }
       if (pass != passConfirm) {
         Get.snackbar(
           'Senha inválida',
           'Os campos senha e confirmação de senha devem ser iguais.',
-          backgroundColor: Colors.red[300],
+          backgroundColor: Theme.of(context).errorColor,
         );
+        return;
       }
       var user = User(
         fullName: name,
@@ -61,13 +79,13 @@ class _LoginState extends State<Login> {
       bool status = await us.register(user);
       if (status) {
         //TODO: cadastro efetuado
-        print('cadastro efetuado');
       } else {
         Get.snackbar(
           'Cadastro não efetuado',
           'Este e-mail já esta cadastrado em nosso sistema.',
           backgroundColor: Theme.of(context).errorColor,
         );
+        return;
       }
     }
   }

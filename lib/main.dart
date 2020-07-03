@@ -8,6 +8,7 @@ void main() {
       debugShowCheckedModeBanner: false,
       title: 'Aquarius Store',
       theme: ThemeData(
+        errorColor: Colors.red[200],
         primaryColor: Colors.blue[200],
         accentColor: Colors.purple[200],
         appBarTheme: AppBarTheme(
