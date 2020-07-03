@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:aquariusstore/models/user.dart';
 import 'package:aquariusstore/services/user_service.dart';
+import 'package:aquariusstore/controllers/user_controller.dart';
 import 'package:convert/convert.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto/crypto.dart' as crypto;
@@ -14,6 +15,8 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   bool isLogin = true;
   bool isLoading = false;
+
+  final UserController userController = Get.find<UserController>();
 
   final nameController = TextEditingController();
   final emailController = TextEditingController();
@@ -48,7 +51,8 @@ class _LoginState extends State<Login> {
         });
         return;
       } else {
-        //TODO: Login efetuado.
+        //LOGADO
+        userController.setUser(user);
         Get.close(1);
       }
     } else {
@@ -90,7 +94,8 @@ class _LoginState extends State<Login> {
       );
       bool status = await us.register(user);
       if (status) {
-        //TODO: cadastro efetuado
+        //CADASTRADO
+        userController.setUser(user);
         Get.close(1);
       } else {
         Get.snackbar(

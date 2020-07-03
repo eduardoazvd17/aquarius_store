@@ -1,8 +1,10 @@
 import 'package:aquariusstore/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get_storage/get_storage.dart';
 
 class UserService {
   var _db = Firestore.instance.collection('users');
+  var _credentials = GetStorage();
 
   Future<bool> isUserRegistered(String email) async {
     DocumentSnapshot user = await _db.document(email).get();
@@ -20,11 +22,34 @@ class UserService {
     } else {
       var u = User.fromJson(user.data['data']);
       if (u.password.toUpperCase() == password) {
+        saveCredentials(email);
         return u;
       } else {
         return null;
       }
     }
+  }
+
+  Future<User> loginWithCredentials() async {
+    String email = loadCredentials();
+    if (email == null || email.isEmpty) {
+      return null;
+    } else {
+      DocumentSnapshot user = await _db.document(email).get();
+      return User.fromJson(user.data['data']);
+    }
+  }
+
+  saveCredentials(String email) {
+    _credentials.write('email', email);
+  }
+
+  String loadCredentials() {
+    return _credentials.read('email');
+  }
+
+  deleteCredentials() {
+    _credentials.remove('email');
   }
 
   Future<bool> register(User user) async {
@@ -35,6 +60,7 @@ class UserService {
       await _db.document(user.email).setData({
         'data': user.toJson(),
       });
+      saveCredentials(user.email);
       return true;
     }
   }

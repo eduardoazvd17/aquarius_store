@@ -1,8 +1,11 @@
 import 'package:aquariusstore/views/nav_page.dart';
+import 'package:aquariusstore/views/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();
   runApp(
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
@@ -20,7 +23,7 @@ void main() {
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: NavPage(),
+      home: Splash(),
     ),
   );
 }
