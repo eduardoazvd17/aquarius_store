@@ -7,7 +7,7 @@ class DrawerTile extends StatelessWidget {
   final String title;
   final int page;
   DrawerTile({this.iconData, this.title, this.page});
-  NavController navController = Get.find<NavController>();
+  final NavController navController = Get.find<NavController>();
   @override
   Widget build(BuildContext context) {
     return InkWell(

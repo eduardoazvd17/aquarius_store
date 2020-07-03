@@ -1,4 +1,9 @@
+import 'dart:convert';
+import 'package:aquariusstore/models/user.dart';
+import 'package:aquariusstore/services/user_service.dart';
+import 'package:convert/convert.dart';
 import 'package:flutter/material.dart';
+import 'package:crypto/crypto.dart' as crypto;
 import 'package:get/get.dart';
 
 class Login extends StatefulWidget {
@@ -13,18 +18,65 @@ class _LoginState extends State<Login> {
   final passController = TextEditingController();
   final passConfirmController = TextEditingController();
 
-  _sendForm() {
+  _sendForm() async {
+    var us = UserService();
     if (isLogin) {
       String email = emailController.text;
-      String pass = passController.text;
-      //Entrar
+      String pass = _generateMD5(passController.text);
+      var user = await us.login(email: email, password: pass);
+      if (user == null) {
+        Get.snackbar(
+          'Credenciais incorretas',
+          'Senha incorreta ou usuário não cadastrado.',
+          backgroundColor: Colors.red[300],
+        );
+      } else {
+        //TODO: Login efetuado.
+        print('login efetuado');
+      }
     } else {
       String name = nameController.text;
       String email = emailController.text;
-      String pass = passController.text;
-      String passConfirm = passConfirmController.text;
-      //Cadastro
+      String pass = _generateMD5(passController.text);
+      String passConfirm = _generateMD5(passConfirmController.text);
+      if (passController.text.isEmpty || passController.text.length < 6) {
+        Get.snackbar(
+          'Senha inválida',
+          'O tamanho da sua senha deve maior ou igual a 6 caracteres.',
+          backgroundColor: Colors.red[300],
+        );
+      }
+      if (pass != passConfirm) {
+        Get.snackbar(
+          'Senha inválida',
+          'Os campos senha e confirmação de senha devem ser iguais.',
+          backgroundColor: Colors.red[300],
+        );
+      }
+      var user = User(
+        fullName: name,
+        email: email,
+        password: pass,
+      );
+      bool status = await us.register(user);
+      if (status) {
+        //TODO: cadastro efetuado
+        print('cadastro efetuado');
+      } else {
+        Get.snackbar(
+          'Cadastro não efetuado',
+          'Este e-mail já esta cadastrado em nosso sistema.',
+          backgroundColor: Theme.of(context).errorColor,
+        );
+      }
     }
+  }
+
+  String _generateMD5(String data) {
+    var content = new Utf8Encoder().convert(data);
+    var md5 = crypto.md5;
+    var digest = md5.convert(content);
+    return hex.encode(digest.bytes).toString().toUpperCase();
   }
 
   @override
