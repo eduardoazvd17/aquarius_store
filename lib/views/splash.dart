@@ -1,5 +1,4 @@
 import 'package:aquariusstore/controllers/nav_controller.dart';
-import 'package:aquariusstore/controllers/product_controller.dart';
 import 'package:aquariusstore/controllers/user_controller.dart';
 import 'package:aquariusstore/models/user.dart';
 import 'package:aquariusstore/services/user_service.dart';
@@ -8,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Splash extends StatefulWidget {
-  final NavController navController = Get.put(NavController());
-  final UserController userController = Get.put(UserController());
-  final ProductController productController = Get.put(ProductController());
+  final NavController navController = Get.put<NavController>(NavController());
+  final UserController userController =
+      Get.put<UserController>(UserController());
   @override
   _SplashState createState() => _SplashState();
 }
