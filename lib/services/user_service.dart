@@ -4,7 +4,7 @@ import 'package:get_storage/get_storage.dart';
 
 class UserService {
   var _db = Firestore.instance.collection('users');
-  var _credentials = GetStorage();
+  var _credentials = GetStorage('credentials');
 
   Future<bool> isUserRegistered(String email) async {
     DocumentSnapshot user = await _db.document(email).get();
@@ -36,7 +36,11 @@ class UserService {
       return null;
     } else {
       DocumentSnapshot user = await _db.document(email).get();
-      return User.fromJson(user.data['data']);
+      if (user.data == null) {
+        return null;
+      } else {
+        return User.fromJson(user.data['data']);
+      }
     }
   }
 

@@ -1,4 +1,5 @@
 import 'package:aquariusstore/controllers/nav_controller.dart';
+import 'package:aquariusstore/controllers/product_controller.dart';
 import 'package:aquariusstore/controllers/user_controller.dart';
 import 'package:aquariusstore/models/user.dart';
 import 'package:aquariusstore/services/user_service.dart';
@@ -9,6 +10,7 @@ import 'package:get/get.dart';
 class Splash extends StatefulWidget {
   final NavController navController = Get.put(NavController());
   final UserController userController = Get.put(UserController());
+  final ProductController productController = Get.put(ProductController());
   @override
   _SplashState createState() => _SplashState();
 }
@@ -20,7 +22,7 @@ class _SplashState extends State<Splash> {
     _isLogged().then((user) {
       widget.userController.setUser(user);
       Future.delayed(Duration(seconds: 1, milliseconds: 500)).then(
-        (_) => Get.offAll(
+        (_) => Get.off(
           NavPage(),
         ),
       );

@@ -1,4 +1,3 @@
-import 'package:aquariusstore/views/nav_page.dart';
 import 'package:aquariusstore/views/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,7 +12,7 @@ void main() async {
       theme: ThemeData(
         errorColor: Colors.red[200],
         primaryColor: Colors.blue[200],
-        accentColor: Colors.purple[200],
+        accentColor: Colors.purple[300],
         appBarTheme: AppBarTheme(
           iconTheme: IconThemeData(
             color: Colors.blue[200],

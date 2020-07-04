@@ -1,8 +1,11 @@
 import 'package:aquariusstore/components/badge.dart';
 import 'package:aquariusstore/components/main_drawer.dart';
+import 'package:aquariusstore/services/product_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Products extends StatelessWidget {
+  final productService = Get.find<ProductService>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

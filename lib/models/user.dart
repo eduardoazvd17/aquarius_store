@@ -6,11 +6,13 @@ class User {
   String fullName;
   String email;
   String password;
+  bool isAdm;
 
   User({
     @required this.fullName,
     @required this.email,
     @required this.password,
+    this.isAdm = false,
   });
 
   String toJson() {
@@ -18,6 +20,7 @@ class User {
     userMap.putIfAbsent('fullName', () => fullName);
     userMap.putIfAbsent('email', () => email);
     userMap.putIfAbsent('password', () => password);
+    userMap.putIfAbsent('isAdm', () => isAdm);
     return json.encode(userMap);
   }
 
@@ -26,5 +29,6 @@ class User {
     this.fullName = userMap['fullName'];
     this.email = userMap['email'];
     this.password = userMap['password'];
+    this.isAdm = userMap['isAdm'];
   }
 }

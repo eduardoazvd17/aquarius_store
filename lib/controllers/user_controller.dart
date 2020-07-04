@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 import 'package:aquariusstore/models/user.dart';
 
 class UserController extends GetxController {
-  Rx<User> user;
+  Rx<User> user = Rx();
   void setUser(User newUser) {
     if (newUser == null) {
-      user = null;
+      user.value = null;
       UserService().deleteCredentials();
     } else {
-      user = newUser.obs;
+      user.value = newUser;
     }
   }
 }
