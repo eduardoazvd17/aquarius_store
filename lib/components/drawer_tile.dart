@@ -23,7 +23,7 @@ class DrawerTile extends StatelessWidget {
                   iconData,
                   size: 32,
                   color: navController.pageController.value.page == page
-                      ? Theme.of(context).primaryColor
+                      ? Theme.of(context).accentColor
                       : Colors.grey[700],
                 ),
               ),
@@ -32,7 +32,7 @@ class DrawerTile extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16,
                   color: navController.pageController.value.page == page
-                      ? Theme.of(context).primaryColor
+                      ? Theme.of(context).accentColor
                       : Colors.grey[700],
                 ),
               )

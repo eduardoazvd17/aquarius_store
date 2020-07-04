@@ -14,12 +14,22 @@ class MainDrawer extends StatelessWidget {
           return Container(
             height: cnt.maxHeight,
             width: cnt.maxWidth,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Theme.of(context).primaryColor,
+                  Colors.blue[50],
+                  Theme.of(context).scaffoldBackgroundColor,
+                ],
+              ),
+            ),
             child: Column(
               children: <Widget>[
                 Container(
-                  height: cnt.maxHeight * 0.234,
+                  height: cnt.maxHeight * 0.3,
                   width: cnt.maxWidth,
-                  color: Theme.of(context).primaryColor,
                   child: Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: cnt.maxWidth * 0.1),
@@ -30,18 +40,18 @@ class MainDrawer extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            userController.user == null
+                            userController.user.value == null
                                 ? 'Olá visitante'
-                                : 'Olá ${userController.user.value.fullName.split(' ').first}',
+                                : 'Olá ${userController.user.value.fullName}.',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 22,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           InkWell(
                             onTap: () {
-                              if (userController.user == null) {
+                              if (userController.user.value == null) {
                                 Get.to(Login());
                               } else {
                                 Get.dialog(
@@ -73,9 +83,9 @@ class MainDrawer extends StatelessWidget {
                               }
                             },
                             child: Text(
-                              userController.user == null
-                                  ? 'Entre ou Cadastre-se'
-                                  : 'Finalizar Sessão',
+                              userController.user.value == null
+                                  ? 'Entre ou cadastre-se >'
+                                  : 'Finalizar sessão',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -88,32 +98,54 @@ class MainDrawer extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  height: cnt.maxHeight * 0.766,
+                  height: cnt.maxHeight * 0.7,
                   width: cnt.maxWidth,
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(height: 10),
-                      DrawerTile(
-                        iconData: Icons.home,
-                        title: 'Início',
-                        page: 0,
-                      ),
-                      DrawerTile(
-                        iconData: Icons.list,
-                        title: 'Produtos',
-                        page: 1,
-                      ),
-                      DrawerTile(
-                        iconData: Icons.playlist_add_check,
-                        title: 'Meus Pedidos',
-                        page: 2,
-                      ),
-                      DrawerTile(
-                        iconData: Icons.location_on,
-                        title: 'Lojas',
-                        page: 3,
-                      ),
-                    ],
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: <Widget>[
+                        DrawerTile(
+                          iconData: Icons.home,
+                          title: 'Início',
+                          page: 0,
+                        ),
+                        DrawerTile(
+                          iconData: Icons.list,
+                          title: 'Produtos',
+                          page: 1,
+                        ),
+                        DrawerTile(
+                          iconData: Icons.playlist_add_check,
+                          title: 'Meus Pedidos',
+                          page: 2,
+                        ),
+                        DrawerTile(
+                          iconData: Icons.location_on,
+                          title: 'Lojas',
+                          page: 3,
+                        ),
+                        Obx(
+                          () => userController.user.value == null
+                              ? Container()
+                              : !userController.user.value.isAdm
+                                  ? Container()
+                                  : Column(
+                                      children: <Widget>[
+                                        Divider(),
+                                        DrawerTile(
+                                          iconData: Icons.settings,
+                                          title: 'Configurações',
+                                          page: 4,
+                                        ),
+                                        DrawerTile(
+                                          iconData: Icons.settings_applications,
+                                          title: 'Teste',
+                                          page: 5,
+                                        ),
+                                      ],
+                                    ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
