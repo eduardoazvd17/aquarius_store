@@ -233,7 +233,9 @@ class _LoginState extends State<Login> {
                                     isLogin
                                         ? FlatButton(
                                             padding: EdgeInsets.zero,
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              //TODO: Esqueci minha senha.
+                                            },
                                             child: Text('Esqueci minha senha'),
                                           )
                                         : Container(),

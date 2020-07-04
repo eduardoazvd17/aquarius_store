@@ -1,5 +1,6 @@
 import 'package:aquariusstore/components/badge.dart';
 import 'package:aquariusstore/components/main_drawer.dart';
+import 'package:aquariusstore/components/search_box.dart';
 import 'package:aquariusstore/controllers/product_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,7 +26,9 @@ class Products extends StatelessWidget {
       drawer: MainDrawer(),
       body: LayoutBuilder(
         builder: (ctx, cnt) {
-          return Container();
+          return Container(
+            child: SearchBox(),
+          );
         },
       ),
     );
