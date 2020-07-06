@@ -116,8 +116,12 @@ class _LoginState extends State<Login> {
       while (randomCode < 100000) {
         randomCode *= 10;
       }
-      print(randomCode);
-      //await EmailService().forgotPass(email, randomCode.toString());
+      try {
+        //TODO: Erro ao enviar e-mail.
+        await EmailService().forgotPass(email, randomCode.toString());
+      } catch (e) {
+        print(e.message);
+      }
       setState(() {
         genCode = randomCode.toString();
         sendEmail = true;
