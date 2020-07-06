@@ -38,10 +38,9 @@ class _SplashState extends State<Splash> {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: Center(
-        child: Icon(
-          Icons.shop,
-          color: Colors.white,
-          size: MediaQuery.of(context).size.width * 0.4,
+        child: Image.asset(
+          "assets/images/logo.png",
+          width: MediaQuery.of(context).size.width * 0.5,
         ),
       ),
     );
