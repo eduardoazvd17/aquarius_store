@@ -74,4 +74,16 @@ class UserService {
       'data': user.toJson(),
     });
   }
+
+  Future<bool> changePass(String email, String newPass) async {
+    DocumentSnapshot user = await _db.document(email).get();
+    if (user == null || user.data == null) {
+      return false;
+    } else {
+      User u = User.fromJson(user.data['data']);
+      u.password = newPass;
+      await updateUser(u);
+      return true;
+    }
+  }
 }
