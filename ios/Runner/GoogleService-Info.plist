@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>246544856294-4455abo2c87vbs1mfh0f907brvve3097.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.246544856294-4455abo2c87vbs1mfh0f907brvve3097</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDxnHorNacvvKnyRnk9KxEhkgnR0omFhDs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>246544856294</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.eduardoazevedo.aquariusstore</string>
+	<key>PROJECT_ID</key>
+	<string>aquariusstore-20</string>
+	<key>STORAGE_BUCKET</key>
+	<string>aquariusstore-20.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:246544856294:ios:dd1c0be07ead147af43727</string>
+	<key>DATABASE_URL</key>
+	<string>https://aquariusstore-20.firebaseio.com</string>
+</dict>
+</plist>
