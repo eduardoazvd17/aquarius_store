@@ -39,11 +39,13 @@ class MainDrawer extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Image.asset(
-                            "assets/images/banner.png",
-                            alignment: Alignment.center,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: Image.asset(
+                              "assets/images/banner.png",
+                              alignment: Alignment.center,
+                            ),
                           ),
-                          SizedBox(height: 20),
                           Text(
                             userController.user.value == null
                                 ? 'Olá visitante'
@@ -118,10 +120,14 @@ class MainDrawer extends StatelessWidget {
                           title: 'Produtos',
                           page: 1,
                         ),
-                        DrawerTile(
-                          iconData: Icons.playlist_add_check,
-                          title: 'Meus Pedidos',
-                          page: 2,
+                        Obx(
+                          () => userController.user.value == null
+                              ? Container()
+                              : DrawerTile(
+                                  iconData: Icons.playlist_add_check,
+                                  title: 'Meus Pedidos',
+                                  page: 2,
+                                ),
                         ),
                         DrawerTile(
                           iconData: Icons.location_on,

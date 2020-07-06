@@ -116,17 +116,17 @@ class _LoginState extends State<Login> {
       while (randomCode < 100000) {
         randomCode *= 10;
       }
-      try {
-        //TODO: Erro ao enviar e-mail.
-        await EmailService().forgotPass(email, randomCode.toString());
-      } catch (e) {
-        print('ERRO DE EMAIL: ' + e.message);
-      }
+      await EmailService().forgotPass(email, randomCode.toString());
       setState(() {
         genCode = randomCode.toString();
         sendEmail = true;
         isLoading = false;
       });
+      Get.snackbar(
+        'Código de Recuperação',
+        'Enviamos um e-mail para $email com o código de recuperação para alterar a senha.',
+        backgroundColor: Theme.of(context).errorColor,
+      );
     }
   }
 
@@ -314,17 +314,24 @@ class _LoginState extends State<Login> {
                                     : Container(),
                                 SizedBox(height: !isLogin ? 10 : 0),
                                 sendEmail
-                                    ? TextFormField(
-                                        controller: codeController,
-                                        autocorrect: false,
-                                        keyboardType:
-                                            TextInputType.numberWithOptions(
-                                          decimal: false,
-                                        ),
-                                        decoration: InputDecoration(
-                                          labelText: 'Código de Recuperação',
-                                          suffixIcon: Icon(Icons.lock),
-                                        ),
+                                    ? Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          TextFormField(
+                                            controller: codeController,
+                                            autocorrect: false,
+                                            keyboardType:
+                                                TextInputType.numberWithOptions(
+                                              decimal: false,
+                                            ),
+                                            decoration: InputDecoration(
+                                              labelText:
+                                                  'Código de Recuperação',
+                                              suffixIcon: Icon(Icons.lock),
+                                            ),
+                                          ),
+                                          SizedBox(height: 10),
+                                        ],
                                       )
                                     : TextFormField(
                                         controller: emailController,
