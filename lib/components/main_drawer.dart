@@ -135,15 +135,33 @@ class MainDrawer extends StatelessWidget {
                                   : Column(
                                       children: <Widget>[
                                         Divider(),
+                                        Text(
+                                          'Gerenciamento',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Divider(),
                                         DrawerTile(
-                                          iconData: Icons.settings,
-                                          title: 'Configurações',
+                                          iconData: Icons.category,
+                                          title: 'Destaques',
                                           page: 4,
                                         ),
                                         DrawerTile(
-                                          iconData: Icons.settings_applications,
-                                          title: 'Teste',
+                                          iconData: Icons.people,
+                                          title: 'Usuários',
                                           page: 5,
+                                        ),
+                                        DrawerTile(
+                                          iconData: Icons.shop_two,
+                                          title: 'Produtos',
+                                          page: 6,
+                                        ),
+                                        DrawerTile(
+                                          iconData: Icons.featured_play_list,
+                                          title: 'Pedidos',
+                                          page: 7,
                                         ),
                                       ],
                                     ),
