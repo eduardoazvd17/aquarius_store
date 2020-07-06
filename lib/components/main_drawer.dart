@@ -52,7 +52,7 @@ class MainDrawer extends StatelessWidget {
                                 : 'Olá ${userController.user.value.fullName}.',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 20,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -94,7 +94,7 @@ class MainDrawer extends StatelessWidget {
                                   ? 'Entre ou cadastre-se >'
                                   : 'Finalizar sessão',
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
