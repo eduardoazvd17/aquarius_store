@@ -125,7 +125,8 @@ class _LoginState extends State<Login> {
       Get.snackbar(
         'Código de Recuperação',
         'Enviamos um e-mail para $email com o código de recuperação para alterar a senha.',
-        backgroundColor: Theme.of(context).errorColor,
+        backgroundColor: Theme.of(context).accentColor,
+        colorText: Colors.white,
       );
     }
   }
@@ -269,6 +270,10 @@ class _LoginState extends State<Login> {
                                             return;
                                           }
                                           if (!isLogin) {
+                                            nameController.clear();
+                                            emailController.clear();
+                                            passController.clear();
+                                            passConfirmController.clear();
                                             setState(() {
                                               isLogin = true;
                                             });

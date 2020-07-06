@@ -39,20 +39,13 @@ class MainDrawer extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 20),
-                            child: Image.asset(
-                              "assets/images/banner.png",
-                              alignment: Alignment.center,
-                            ),
-                          ),
                           Text(
                             userController.user.value == null
                                 ? 'Olá visitante'
-                                : 'Olá ${userController.user.value.fullName}.',
+                                : 'Olá ${userController.user.value.fullName.split(' ').first}.',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 22,
+                              fontSize: cnt.maxWidth * 0.1,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -94,7 +87,7 @@ class MainDrawer extends StatelessWidget {
                                   ? 'Entre ou cadastre-se >'
                                   : 'Finalizar sessão',
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: cnt.maxWidth * 0.069,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
