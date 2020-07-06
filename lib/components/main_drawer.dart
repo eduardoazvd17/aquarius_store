@@ -39,6 +39,11 @@ class MainDrawer extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
+                          Image.asset(
+                            "assets/images/banner.png",
+                            alignment: Alignment.center,
+                          ),
+                          SizedBox(height: 20),
                           Text(
                             userController.user.value == null
                                 ? 'Olá visitante'
