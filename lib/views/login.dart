@@ -120,7 +120,7 @@ class _LoginState extends State<Login> {
         //TODO: Erro ao enviar e-mail.
         await EmailService().forgotPass(email, randomCode.toString());
       } catch (e) {
-        print(e.message);
+        print('ERRO DE EMAIL: ' + e.message);
       }
       setState(() {
         genCode = randomCode.toString();

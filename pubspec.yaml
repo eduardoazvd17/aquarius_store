@@ -21,7 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  flutter_email_sender:
+  flutter_mailer:
   get:
   get_storage:
   crypto:
