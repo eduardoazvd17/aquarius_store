@@ -8,7 +8,7 @@ class GenHighlights extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Aquarius Store'),
+        title: FittedBox(child: Text('Gerenciamento de Destaques')),
         actions: <Widget>[
           Badge(
             value: '0',

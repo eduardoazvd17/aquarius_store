@@ -8,7 +8,7 @@ class GenOrders extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Aquarius Store'),
+        title: FittedBox(child: Text('Gerenciamento de Pedidos')),
         actions: <Widget>[
           Badge(
             value: '0',

@@ -1,4 +1,3 @@
-import 'package:aquariusstore/components/badge.dart';
 import 'package:aquariusstore/components/main_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -8,16 +7,7 @@ class GenUsers extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Aquarius Store'),
-        actions: <Widget>[
-          Badge(
-            value: '0',
-            child: IconButton(
-              icon: Icon(Icons.shopping_cart),
-              onPressed: () {},
-            ),
-          ),
-        ],
+        title: FittedBox(child: Text('Gerenciamento de Usuários')),
       ),
       drawer: MainDrawer(),
       body: LayoutBuilder(
