@@ -1,5 +1,9 @@
 import 'package:aquariusstore/controllers/nav_controller.dart';
 import 'package:aquariusstore/controllers/user_controller.dart';
+import 'package:aquariusstore/views/gen_highlights.dart';
+import 'package:aquariusstore/views/gen_orders.dart';
+import 'package:aquariusstore/views/gen_products.dart';
+import 'package:aquariusstore/views/gen_users.dart';
 import 'package:aquariusstore/views/orders.dart';
 import 'package:aquariusstore/views/products.dart';
 import 'package:aquariusstore/views/shops.dart';
@@ -23,6 +27,10 @@ class NavPage extends StatelessWidget {
           Products(),
           Orders(),
           Shops(),
+          GenHighlights(),
+          GenUsers(),
+          GenProducts(),
+          GenOrders(),
         ],
       ),
     );

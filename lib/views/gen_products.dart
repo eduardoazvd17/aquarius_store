@@ -1,28 +1,23 @@
-import 'package:aquariusstore/components/badge.dart';
 import 'package:aquariusstore/components/empty_list_message.dart';
+import 'package:aquariusstore/components/gen_product_item.dart';
 import 'package:aquariusstore/components/main_drawer.dart';
-import 'package:aquariusstore/components/product_item.dart';
 import 'package:aquariusstore/components/search_box.dart';
 import 'package:aquariusstore/controllers/product_controller.dart';
+import 'package:aquariusstore/views/add_product.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Products extends StatelessWidget {
+class GenProducts extends StatelessWidget {
   final productController = Get.find<ProductController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Aquarius Store'),
+        title: FittedBox(child: Text('Gerenciamento de Produtos')),
         actions: <Widget>[
-          Badge(
-            value: '0',
-            child: IconButton(
-              icon: Icon(Icons.shopping_cart),
-              onPressed: () {},
-            ),
-          ),
+          IconButton(
+              icon: Icon(Icons.add), onPressed: () => Get.to(AddProduct())),
         ],
       ),
       drawer: MainDrawer(),
@@ -32,24 +27,17 @@ class Products extends StatelessWidget {
             children: <Widget>[
               SearchBox(),
               productController.products.value.length == 0
-                  ? EmptyListMessage('Nenhum produto encontrado :/')
+                  ? EmptyListMessage('Nenhum produto cadastrado')
                   : Padding(
                       padding:
                           const EdgeInsets.only(top: 70, left: 10, right: 10),
                       child: Obx(
-                        () => GridView.builder(
+                        () => ListView.builder(
                           itemCount: productController.products.value.length,
                           itemBuilder: (ctx, index) {
-                            return ProductItem(
+                            return GenProductItem(
                                 productController.products[index]);
                           },
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 1,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                          ),
                         ),
                       ),
                     ),
