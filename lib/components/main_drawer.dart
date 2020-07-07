@@ -1,3 +1,4 @@
+import 'package:aquariusstore/controllers/nav_controller.dart';
 import 'package:aquariusstore/controllers/user_controller.dart';
 import 'package:aquariusstore/components/drawer_tile.dart';
 import 'package:aquariusstore/views/login.dart';
@@ -6,6 +7,7 @@ import 'package:get/get.dart';
 
 class MainDrawer extends StatelessWidget {
   final UserController userController = Get.find<UserController>();
+  final NavController navController = Get.find<NavController>();
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -64,6 +66,7 @@ class MainDrawer extends StatelessWidget {
                                         textColor:
                                             Theme.of(context).accentColor,
                                         onPressed: () {
+                                          navController.setPage(0);
                                           userController.setUser(null);
                                           Get.close(1);
                                         },
