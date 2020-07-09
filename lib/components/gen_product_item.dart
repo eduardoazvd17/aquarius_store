@@ -9,8 +9,7 @@ class GenProductItem extends StatelessWidget {
     return ListTile(
       onTap: () {},
       isThreeLine: true,
-      leading: CircleAvatar(
-        backgroundColor: Colors.transparent,
+      leading: FittedBox(
         child: Image.network(
           product.imagesUrl[0],
           fit: BoxFit.cover,
@@ -18,9 +17,18 @@ class GenProductItem extends StatelessWidget {
       ),
       title: Text(product.name),
       subtitle: Text(product.price.toStringAsFixed(2)),
-      trailing: IconButton(
-        icon: Icon(Icons.close),
-        onPressed: () {},
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(Icons.close),
+            onPressed: () {},
+          ),
+        ],
       ),
     );
   }
