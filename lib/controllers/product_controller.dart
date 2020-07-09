@@ -15,8 +15,9 @@ class ProductController extends GetxController {
     if (textFilter == null || textFilter.isEmpty) {
       products.value = allProducts.value;
     } else {
-      products.value =
-          allProducts.value.where((p) => p.name.contains(textFilter)).toList();
+      products.value = allProducts.value
+          .where((p) => p.name.toLowerCase().contains(textFilter.toLowerCase()))
+          .toList();
     }
   }
 
