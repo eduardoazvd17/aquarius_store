@@ -50,8 +50,10 @@ class _AddProductState extends State<AddProduct> {
     );
 
     var ps = ProductService();
-    ps.addProduct(product);
     widget.productController.add(product);
+    ps.addProduct(product);
+
+    Get.close(1);
   }
 
   _addPhoto() {
