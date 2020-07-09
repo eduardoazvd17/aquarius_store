@@ -10,21 +10,14 @@ class GenProductItem extends StatelessWidget {
       onTap: () {},
       isThreeLine: true,
       leading: CircleAvatar(
+        backgroundColor: Colors.transparent,
         child: Image.network(
           product.imagesUrl[0],
           fit: BoxFit.cover,
         ),
       ),
       title: Text(product.name),
-      subtitle: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(product.price.toStringAsFixed(2)),
-          SizedBox(height: 5),
-          Text(product.description)
-        ],
-      ),
+      subtitle: Text(product.price.toStringAsFixed(2)),
       trailing: IconButton(
         icon: Icon(Icons.close),
         onPressed: () {},

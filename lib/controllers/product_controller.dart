@@ -11,12 +11,17 @@ class ProductController extends GetxController {
     pService.loadAllProducts().then((list) => allProducts.value = list);
   }
 
-  List<Product> search(String textFilter) {
+  search(String textFilter) {
     if (textFilter == null || textFilter.isEmpty) {
       products.value = allProducts.value;
     } else {
       products.value =
           allProducts.value.where((p) => p.name.contains(textFilter)).toList();
     }
+  }
+
+  add(Product p) {
+    allProducts.value.add(p);
+    products.value.add(p);
   }
 }
