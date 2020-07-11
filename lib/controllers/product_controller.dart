@@ -6,9 +6,11 @@ class ProductController extends GetxController {
   RxList<Product> allProducts = RxList([]);
   RxList<Product> products = RxList([]);
 
-  ProductController() {
+  init() async {
     var pService = ProductService();
-    pService.loadAllProducts().then((list) => allProducts.value = list);
+    List<Product> loadedProducts = await pService.loadAllProducts();
+    allProducts.value = loadedProducts;
+    products.value = loadedProducts;
   }
 
   search(String textFilter) {
@@ -23,6 +25,11 @@ class ProductController extends GetxController {
 
   add(Product p) {
     allProducts.value.add(p);
-    products.value.add(p);
+    products.value = allProducts.value;
+  }
+
+  remove(Product p) {
+    allProducts.remove(p);
+    products.value = allProducts.value;
   }
 }

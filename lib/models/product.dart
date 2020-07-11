@@ -37,6 +37,7 @@ class Product {
     this.name = productMap['name'];
     this.description = productMap['description'];
     this.price = double.tryParse(productMap['price']);
-    this.imagesUrl = productMap['imagesUrl'];
+    this.imagesUrl =
+        List<String>.from(productMap['imagesUrl'] as List<dynamic>);
   }
 }

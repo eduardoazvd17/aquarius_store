@@ -1,8 +1,12 @@
+import 'package:aquariusstore/controllers/product_controller.dart';
 import 'package:aquariusstore/models/product.dart';
+import 'package:aquariusstore/services/product_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class GenProductItem extends StatelessWidget {
   final Product product;
+  final ProductController productController = Get.find<ProductController>();
   GenProductItem(this.product);
   @override
   Widget build(BuildContext context) {
@@ -26,7 +30,31 @@ class GenProductItem extends StatelessWidget {
           ),
           IconButton(
             icon: Icon(Icons.close),
-            onPressed: () {},
+            onPressed: () {
+              Get.dialog(
+                AlertDialog(
+                  title: Text('Exluir Produto'),
+                  content: Text(
+                      'Deseja realmente excluir o produto ${product.name}?'),
+                  actions: <Widget>[
+                    FlatButton(
+                      onPressed: () {
+                        ProductService().removeProduct(product);
+                        productController.remove(product);
+                        Get.close(1);
+                      },
+                      child: Text('Sim'),
+                      textColor: Theme.of(context).accentColor,
+                    ),
+                    FlatButton(
+                      onPressed: () => Get.close(1),
+                      child: Text('Não'),
+                      textColor: Theme.of(context).accentColor,
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
         ],
       ),
