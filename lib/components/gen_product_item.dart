@@ -20,7 +20,11 @@ class GenProductItem extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      title: Text(product.name),
+      title: Text(
+        product.name,
+        textAlign: TextAlign.left,
+        overflow: TextOverflow.ellipsis,
+      ),
       subtitle: Text('R\$' + product.price.toStringAsFixed(2)),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,

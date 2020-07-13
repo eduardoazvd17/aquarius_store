@@ -18,9 +18,11 @@ class ProductItem extends StatelessWidget {
         footer: GridTileBar(
           backgroundColor: Colors.black54,
           subtitle: Text('R\$${product.price.toStringAsFixed(2)}'),
-          title: Text(
-            '${product.name}',
-            textAlign: TextAlign.center,
+          title: FittedBox(
+            child: Text(
+              '${product.name}',
+              textAlign: TextAlign.left,
+            ),
           ),
           trailing: IconButton(
             icon: Icon(
