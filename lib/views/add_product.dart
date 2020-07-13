@@ -20,6 +20,7 @@ class _AddProductState extends State<AddProduct> {
   var urlController = TextEditingController();
   var descriptionController = TextEditingController();
   List<String> urls = [];
+  String mainUrl;
 
   @override
   void initState() {
@@ -31,8 +32,15 @@ class _AddProductState extends State<AddProduct> {
       descriptionController.text = p.description;
       setState(() {
         urls = p.imagesUrl;
+        mainUrl = p.mainImageUrl;
       });
     }
+  }
+
+  _setMainImage(String url) {
+    setState(() {
+      mainUrl = url;
+    });
   }
 
   _send() {
@@ -58,6 +66,12 @@ class _AddProductState extends State<AddProduct> {
       return;
     }
 
+    if (mainUrl == null) {
+      setState(() {
+        mainUrl = urls[0];
+      });
+    }
+
     var ps = ProductService();
     if (widget.product == null) {
       var product = Product(
@@ -65,6 +79,7 @@ class _AddProductState extends State<AddProduct> {
         price: double.tryParse(price),
         description: desc,
         imagesUrl: urls,
+        mainImageUrl: mainUrl,
       );
       ps.addProduct(product);
     } else {
@@ -74,6 +89,7 @@ class _AddProductState extends State<AddProduct> {
         price: double.tryParse(price),
         description: desc,
         imagesUrl: urls,
+        mainImageUrl: mainUrl,
       );
       ps.updateProduct(product);
     }
@@ -114,6 +130,9 @@ class _AddProductState extends State<AddProduct> {
           textColor: Theme.of(context).accentColor,
           onPressed: () {
             setState(() {
+              if (url == mainUrl) {
+                mainUrl = null;
+              }
               urls.remove(url);
             });
             Get.close(1);
@@ -172,16 +191,39 @@ class _AddProductState extends State<AddProduct> {
                                       ),
                                       Align(
                                         alignment: Alignment.center,
-                                        child: CircleAvatar(
-                                          backgroundColor: Colors.black54,
-                                          child: IconButton(
-                                            icon: Icon(
-                                              Icons.delete,
-                                              color:
-                                                  Theme.of(context).errorColor,
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            CircleAvatar(
+                                              backgroundColor: Colors.black54,
+                                              child: IconButton(
+                                                icon: Icon(
+                                                  Icons.delete,
+                                                  color: Theme.of(context)
+                                                      .errorColor,
+                                                ),
+                                                onPressed: () =>
+                                                    _removePhoto(u),
+                                              ),
                                             ),
-                                            onPressed: () => _removePhoto(u),
-                                          ),
+                                            SizedBox(
+                                                width: u == mainUrl ? 0 : 10),
+                                            u == mainUrl
+                                                ? Container()
+                                                : CircleAvatar(
+                                                    backgroundColor:
+                                                        Colors.black54,
+                                                    child: IconButton(
+                                                        icon: Icon(
+                                                          Icons.done,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .primaryColor,
+                                                        ),
+                                                        onPressed: () =>
+                                                            _setMainImage(u)),
+                                                  ),
+                                          ],
                                         ),
                                       ),
                                     ],

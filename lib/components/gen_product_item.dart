@@ -16,7 +16,7 @@ class GenProductItem extends StatelessWidget {
       isThreeLine: true,
       leading: FittedBox(
         child: Image.network(
-          product.imagesUrl[0],
+          product.mainImageUrl,
           fit: BoxFit.cover,
         ),
       ),

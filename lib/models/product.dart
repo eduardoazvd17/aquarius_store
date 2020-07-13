@@ -7,6 +7,7 @@ class Product {
   String description;
   double price;
   List<String> imagesUrl;
+  String mainImageUrl;
 
   Product({
     this.id,
@@ -14,6 +15,7 @@ class Product {
     this.description,
     this.price,
     this.imagesUrl,
+    this.mainImageUrl,
   });
 
   addImageUrl(String url) {
@@ -30,6 +32,7 @@ class Product {
     productMap.putIfAbsent('description', () => description);
     productMap.putIfAbsent('price', () => price.toStringAsFixed(2));
     productMap.putIfAbsent('imagesUrl', () => imagesUrl);
+    productMap.putIfAbsent('mainImageUrl', () => mainImageUrl);
     return json.encode(productMap);
   }
 
@@ -40,5 +43,6 @@ class Product {
     this.price = double.tryParse(productMap['price']);
     this.imagesUrl =
         List<String>.from(productMap['imagesUrl'] as List<dynamic>);
+    this.mainImageUrl = productMap['mainImageUrl'];
   }
 }

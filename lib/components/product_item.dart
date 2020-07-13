@@ -12,7 +12,7 @@ class ProductItem extends StatelessWidget {
       },
       child: GridTile(
         child: Image.network(
-          '${product.imagesUrl[0]}',
+          '${product.mainImageUrl}',
           fit: BoxFit.cover,
         ),
         footer: GridTileBar(
