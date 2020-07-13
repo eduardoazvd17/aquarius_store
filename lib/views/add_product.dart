@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AddProduct extends StatefulWidget {
+  AddProduct({this.product});
+  final Product product;
   final ProductController productController = Get.find<ProductController>();
   @override
   _AddProductState createState() => _AddProductState();
@@ -18,6 +20,20 @@ class _AddProductState extends State<AddProduct> {
   var urlController = TextEditingController();
   var descriptionController = TextEditingController();
   List<String> urls = [];
+
+  @override
+  void initState() {
+    super.initState();
+    var p = widget.product;
+    if (p != null) {
+      nameController.text = p.name;
+      priceController.text = p.price.toStringAsFixed(2);
+      descriptionController.text = p.description;
+      setState(() {
+        urls = p.imagesUrl;
+      });
+    }
+  }
 
   _send() {
     String name = nameController.text;
@@ -42,16 +58,26 @@ class _AddProductState extends State<AddProduct> {
       return;
     }
 
-    var product = Product(
-      name: name,
-      price: double.tryParse(price),
-      description: desc,
-      imagesUrl: urls,
-    );
-
     var ps = ProductService();
-    ps.addProduct(product);
-    widget.productController.add(product);
+    if (widget.product == null) {
+      var product = Product(
+        name: name,
+        price: double.tryParse(price),
+        description: desc,
+        imagesUrl: urls,
+      );
+      ps.addProduct(product);
+    } else {
+      var product = Product(
+        id: widget.product.id,
+        name: name,
+        price: double.tryParse(price),
+        description: desc,
+        imagesUrl: urls,
+      );
+      ps.updateProduct(product);
+    }
+    widget.productController.reload();
     Get.close(1);
   }
 
@@ -79,15 +105,40 @@ class _AddProductState extends State<AddProduct> {
     }
   }
 
+  _removePhoto(String url) {
+    Get.dialog(AlertDialog(
+      title: Text('Remover imagem'),
+      content: Text('Deseja realmente remover esta imagem?'),
+      actions: <Widget>[
+        FlatButton(
+          textColor: Theme.of(context).accentColor,
+          onPressed: () {
+            setState(() {
+              urls.remove(url);
+            });
+            Get.close(1);
+          },
+          child: Text('Sim'),
+        ),
+        FlatButton(
+          textColor: Theme.of(context).accentColor,
+          onPressed: () => Get.close(1),
+          child: Text('Não'),
+        ),
+      ],
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: _send,
-        child: Icon(Icons.add),
+        child: Icon(widget.product == null ? Icons.add : Icons.save),
       ),
       appBar: AppBar(
-        title: Text('Adicionar Produto'),
+        title: Text(
+            widget.product == null ? 'Adicionar Produto' : 'Editar Produto'),
       ),
       body: SafeArea(
         child: LayoutBuilder(builder: (ctx, cnt) {
@@ -110,13 +161,37 @@ class _AddProductState extends State<AddProduct> {
                         )
                       : CarouselSlider(
                           items: urls
-                              .map((u) => Image.network(u, fit: BoxFit.cover))
+                              .map((u) => Stack(
+                                    children: <Widget>[
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: Image.network(
+                                          u,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: CircleAvatar(
+                                          backgroundColor: Colors.black54,
+                                          child: IconButton(
+                                            icon: Icon(
+                                              Icons.delete,
+                                              color:
+                                                  Theme.of(context).errorColor,
+                                            ),
+                                            onPressed: () => _removePhoto(u),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ))
                               .toList(),
                           options: CarouselOptions(
+                            enableInfiniteScroll: false,
                             enlargeCenterPage: true,
                             height: 250,
-                            autoPlay: true,
-                            pauseAutoPlayOnManualNavigate: true,
+                            autoPlay: false,
                           ),
                         ),
                   SizedBox(height: 20),

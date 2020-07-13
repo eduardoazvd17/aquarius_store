@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 
 class Products extends StatelessWidget {
   final productController = Get.find<ProductController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,28 +32,35 @@ class Products extends StatelessWidget {
           return Stack(
             children: <Widget>[
               SearchBox(),
-              productController.products.value.length == 0
-                  ? EmptyListMessage('Nenhum produto encontrado :/')
-                  : Padding(
-                      padding:
-                          const EdgeInsets.only(top: 70, left: 10, right: 10),
-                      child: Obx(
-                        () => GridView.builder(
-                          itemCount: productController.products.value.length,
-                          itemBuilder: (ctx, index) {
-                            return ProductItem(
-                                productController.products[index]);
-                          },
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 1,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
+              Obx(
+                () => productController.isLoading.value == true
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : productController.products.value.length == 0
+                        ? EmptyListMessage('Nenhum produto encontrado :/')
+                        : Padding(
+                            padding: const EdgeInsets.only(
+                                top: 70, left: 10, right: 10),
+                            child: Obx(
+                              () => GridView.builder(
+                                itemCount:
+                                    productController.products.value.length,
+                                itemBuilder: (ctx, index) {
+                                  return ProductItem(
+                                      productController.products[index]);
+                                },
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 1,
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 10,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
+              ),
             ],
           );
         },

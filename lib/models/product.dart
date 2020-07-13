@@ -9,6 +9,7 @@ class Product {
   List<String> imagesUrl;
 
   Product({
+    this.id,
     this.name,
     this.description,
     this.price,

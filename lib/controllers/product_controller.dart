@@ -5,12 +5,15 @@ import 'package:get/get.dart';
 class ProductController extends GetxController {
   RxList<Product> allProducts = RxList([]);
   RxList<Product> products = RxList([]);
+  RxBool isLoading = false.obs;
 
-  init() async {
+  reload() async {
+    isLoading.value = true;
     var pService = ProductService();
     List<Product> loadedProducts = await pService.loadAllProducts();
     allProducts.value = loadedProducts;
     products.value = loadedProducts;
+    isLoading.value = false;
   }
 
   search(String textFilter) {
@@ -21,15 +24,5 @@ class ProductController extends GetxController {
           .where((p) => p.name.toLowerCase().contains(textFilter.toLowerCase()))
           .toList();
     }
-  }
-
-  add(Product p) {
-    allProducts.value.add(p);
-    products.value = allProducts.value;
-  }
-
-  remove(Product p) {
-    allProducts.remove(p);
-    products.value = allProducts.value;
   }
 }

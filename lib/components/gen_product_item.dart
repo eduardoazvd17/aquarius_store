@@ -1,6 +1,7 @@
 import 'package:aquariusstore/controllers/product_controller.dart';
 import 'package:aquariusstore/models/product.dart';
 import 'package:aquariusstore/services/product_service.dart';
+import 'package:aquariusstore/views/add_product.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,13 +21,17 @@ class GenProductItem extends StatelessWidget {
         ),
       ),
       title: Text(product.name),
-      subtitle: Text(product.price.toStringAsFixed(2)),
+      subtitle: Text('R\$' + product.price.toStringAsFixed(2)),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           IconButton(
             icon: Icon(Icons.edit),
-            onPressed: () {},
+            onPressed: () => Get.to(
+              AddProduct(
+                product: this.product,
+              ),
+            ),
           ),
           IconButton(
             icon: Icon(Icons.close),
@@ -40,7 +45,7 @@ class GenProductItem extends StatelessWidget {
                     FlatButton(
                       onPressed: () {
                         ProductService().removeProduct(product);
-                        productController.remove(product);
+                        productController.reload();
                         Get.close(1);
                       },
                       child: Text('Sim'),

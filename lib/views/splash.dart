@@ -19,7 +19,6 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    widget.productController.init();
     _isLogged().then((user) {
       widget.userController.setUser(user);
       Future.delayed(Duration(seconds: 1, milliseconds: 500)).then(

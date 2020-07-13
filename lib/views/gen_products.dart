@@ -26,21 +26,28 @@ class GenProducts extends StatelessWidget {
           return Stack(
             children: <Widget>[
               SearchBox(),
-              productController.products.value.length == 0
-                  ? EmptyListMessage('Nenhum produto cadastrado')
-                  : Padding(
-                      padding:
-                          const EdgeInsets.only(top: 70, left: 10, right: 10),
-                      child: Obx(
-                        () => ListView.builder(
-                          itemCount: productController.products.value.length,
-                          itemBuilder: (ctx, index) {
-                            return GenProductItem(
-                                productController.products[index]);
-                          },
-                        ),
-                      ),
-                    ),
+              Obx(
+                () => productController.isLoading.value == true
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : productController.products.value.length == 0
+                        ? EmptyListMessage('Nenhum produto cadastrado')
+                        : Padding(
+                            padding: const EdgeInsets.only(
+                                top: 70, left: 10, right: 10),
+                            child: Obx(
+                              () => ListView.builder(
+                                itemCount:
+                                    productController.products.value.length,
+                                itemBuilder: (ctx, index) {
+                                  return GenProductItem(
+                                      productController.products[index]);
+                                },
+                              ),
+                            ),
+                          ),
+              ),
             ],
           );
         },

@@ -1,4 +1,5 @@
 import 'package:aquariusstore/controllers/nav_controller.dart';
+import 'package:aquariusstore/controllers/product_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -7,11 +8,17 @@ class DrawerTile extends StatelessWidget {
   final String title;
   final int page;
   DrawerTile({this.iconData, this.title, this.page});
-  final NavController navController = Get.find<NavController>();
+  final navController = Get.find<NavController>();
+  final productController = Get.find<ProductController>();
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => navController.setPage(page),
+      onTap: () {
+        if (page == 1 || page == 6) {
+          productController.reload();
+        }
+        navController.setPage(page);
+      },
       child: SizedBox(
         height: 60,
         child: Obx(
