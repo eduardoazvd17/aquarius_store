@@ -15,7 +15,9 @@ class DrawerTile extends StatelessWidget {
     return InkWell(
       onTap: () {
         if (page == 1 || page == 6) {
-          productController.reload();
+          if (navController.getPage() != page) {
+            productController.reload();
+          }
         }
         navController.setPage(page);
       },
