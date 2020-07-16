@@ -19,7 +19,9 @@ class Products extends StatelessWidget {
         title: Text('Aquarius Store'),
         actions: <Widget>[
           Badge(
-            value: userController.user.value.cart.length.toString(),
+            value: userController.user.value == null
+                ? '0'
+                : userController.user.value.cart.length.toString(),
             child: IconButton(
               icon: Icon(Icons.shopping_cart),
               onPressed: () {},
