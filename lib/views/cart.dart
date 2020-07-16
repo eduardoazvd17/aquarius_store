@@ -10,9 +10,8 @@ class Cart extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Aquarius Store'),
+        title: Text('Carrinho de Compras'),
       ),
-      drawer: MainDrawer(),
       body: LayoutBuilder(
         builder: (ctx, cnt) {
           return Container();

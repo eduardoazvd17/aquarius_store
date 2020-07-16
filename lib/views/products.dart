@@ -5,6 +5,7 @@ import 'package:aquariusstore/components/product_item.dart';
 import 'package:aquariusstore/components/search_box.dart';
 import 'package:aquariusstore/controllers/product_controller.dart';
 import 'package:aquariusstore/controllers/user_controller.dart';
+import 'package:aquariusstore/views/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,7 +26,7 @@ class Products extends StatelessWidget {
                   : userController.user.value.cart.length.toString(),
               child: IconButton(
                 icon: Icon(Icons.shopping_cart),
-                onPressed: () {},
+                onPressed: () => Get.to(Cart()),
               ),
             ),
           ),

@@ -1,6 +1,7 @@
 import 'package:aquariusstore/components/badge.dart';
 import 'package:aquariusstore/components/main_drawer.dart';
 import 'package:aquariusstore/controllers/user_controller.dart';
+import 'package:aquariusstore/views/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,7 +21,7 @@ class Shops extends StatelessWidget {
                   : userController.user.value.cart.length.toString(),
               child: IconButton(
                 icon: Icon(Icons.shopping_cart),
-                onPressed: () {},
+                onPressed: () => Get.to(Cart()),
               ),
             ),
           ),
