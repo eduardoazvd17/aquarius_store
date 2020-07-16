@@ -1,15 +1,18 @@
+import 'package:aquariusstore/controllers/user_controller.dart';
 import 'package:aquariusstore/models/product.dart';
+import 'package:aquariusstore/views/login.dart';
+import 'package:aquariusstore/views/product_details.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProductItem extends StatelessWidget {
   final Product product;
+  final UserController userController = Get.find<UserController>();
   ProductItem(this.product);
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        //TODO: Open product details.
-      },
+      onTap: () => Get.to(ProductDetails(product)),
       child: GridTile(
         child: Image.network(
           '${product.mainImageUrl}',
@@ -30,7 +33,11 @@ class ProductItem extends StatelessWidget {
               color: Theme.of(context).primaryColor,
             ),
             onPressed: () {
-              //TODO: Add to cart.
+              if (!userController.isLogged()) {
+                Get.to(Login());
+              } else {
+                userController.user.value.cart.add(product);
+              }
             },
           ),
         ),

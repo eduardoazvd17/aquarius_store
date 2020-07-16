@@ -6,6 +6,7 @@ import 'package:aquariusstore/components/search_box.dart';
 import 'package:aquariusstore/controllers/product_controller.dart';
 import 'package:aquariusstore/controllers/user_controller.dart';
 import 'package:aquariusstore/views/cart.dart';
+import 'package:aquariusstore/views/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,12 +22,14 @@ class Products extends StatelessWidget {
         actions: <Widget>[
           Obx(
             () => Badge(
-              value: userController.user.value == null
+              value: !userController.isLogged()
                   ? '0'
                   : userController.user.value.cart.length.toString(),
               child: IconButton(
                 icon: Icon(Icons.shopping_cart),
-                onPressed: () => Get.to(Cart()),
+                onPressed: () => !userController.isLogged()
+                    ? Get.to(Login())
+                    : Get.to(Cart()),
               ),
             ),
           ),

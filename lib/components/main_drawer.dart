@@ -42,7 +42,7 @@ class MainDrawer extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            userController.user.value == null
+                            !userController.isLogged()
                                 ? 'Olá visitante'
                                 : 'Olá ${userController.user.value.fullName.split(' ').first}.',
                             style: TextStyle(
@@ -53,7 +53,7 @@ class MainDrawer extends StatelessWidget {
                           ),
                           InkWell(
                             onTap: () {
-                              if (userController.user.value == null) {
+                              if (!userController.isLogged()) {
                                 Get.to(Login());
                               } else {
                                 Get.dialog(
@@ -86,7 +86,7 @@ class MainDrawer extends StatelessWidget {
                               }
                             },
                             child: Text(
-                              userController.user.value == null
+                              !userController.isLogged()
                                   ? 'Entre ou cadastre-se >'
                                   : 'Finalizar sessão',
                               style: TextStyle(
@@ -117,7 +117,7 @@ class MainDrawer extends StatelessWidget {
                           page: 1,
                         ),
                         Obx(
-                          () => userController.user.value == null
+                          () => !userController.isLogged()
                               ? Container()
                               : DrawerTile(
                                   iconData: Icons.playlist_add_check,
@@ -131,7 +131,7 @@ class MainDrawer extends StatelessWidget {
                           page: 3,
                         ),
                         Obx(
-                          () => userController.user.value == null
+                          () => !userController.isLogged()
                               ? Container()
                               : !userController.user.value.isAdm
                                   ? Container()

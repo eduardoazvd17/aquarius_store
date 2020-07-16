@@ -1,3 +1,4 @@
+import 'package:aquariusstore/models/product.dart';
 import 'package:aquariusstore/services/user_service.dart';
 import 'package:get/get.dart';
 import 'package:aquariusstore/models/user.dart';
@@ -13,4 +14,10 @@ class UserController extends GetxController {
       user.value = newUser;
     }
   }
+
+  bool isLogged() => user.value != null;
+
+  void addToCart(Product p) => user.value.cart.add(p);
+
+  void removeToCart(Product p) => user.value.cart.remove(p);
 }
