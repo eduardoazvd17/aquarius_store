@@ -17,7 +17,11 @@ class GenProducts extends StatelessWidget {
         title: FittedBox(child: Text('Gerenciamento de Produtos')),
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.add), onPressed: () => Get.to(AddProduct())),
+            icon: Icon(Icons.add),
+            onPressed: () => Get.to(
+              AddProduct(),
+            ),
+          ),
         ],
       ),
       drawer: MainDrawer(),
