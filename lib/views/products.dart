@@ -4,12 +4,13 @@ import 'package:aquariusstore/components/main_drawer.dart';
 import 'package:aquariusstore/components/product_item.dart';
 import 'package:aquariusstore/components/search_box.dart';
 import 'package:aquariusstore/controllers/product_controller.dart';
+import 'package:aquariusstore/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Products extends StatelessWidget {
+  final UserController userController = Get.find<UserController>();
   final productController = Get.find<ProductController>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +19,7 @@ class Products extends StatelessWidget {
         title: Text('Aquarius Store'),
         actions: <Widget>[
           Badge(
-            value: '0',
+            value: userController.user.value.cart.length.toString(),
             child: IconButton(
               icon: Icon(Icons.shopping_cart),
               onPressed: () {},

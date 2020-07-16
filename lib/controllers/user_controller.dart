@@ -4,6 +4,7 @@ import 'package:aquariusstore/models/user.dart';
 
 class UserController extends GetxController {
   Rx<User> user = Rx();
+
   void setUser(User newUser) {
     if (newUser == null) {
       user.value = null;
