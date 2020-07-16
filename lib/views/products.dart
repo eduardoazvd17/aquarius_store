@@ -18,13 +18,15 @@ class Products extends StatelessWidget {
         centerTitle: true,
         title: Text('Aquarius Store'),
         actions: <Widget>[
-          Badge(
-            value: userController.user.value == null
-                ? '0'
-                : userController.user.value.cart.length.toString(),
-            child: IconButton(
-              icon: Icon(Icons.shopping_cart),
-              onPressed: () {},
+          Obx(
+            () => Badge(
+              value: userController.user.value == null
+                  ? '0'
+                  : userController.user.value.cart.length.toString(),
+              child: IconButton(
+                icon: Icon(Icons.shopping_cart),
+                onPressed: () {},
+              ),
             ),
           ),
         ],
