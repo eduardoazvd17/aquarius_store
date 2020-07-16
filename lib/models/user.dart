@@ -6,7 +6,7 @@ class User {
   String fullName;
   String email;
   String password;
-  List<Product> cart;
+  List<Product> cart = [];
   bool isAdm;
 
   User({
@@ -14,7 +14,6 @@ class User {
     @required this.email,
     @required this.password,
     this.isAdm = false,
-    this.cart = const [],
   });
 
   String toJson() {

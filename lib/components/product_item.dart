@@ -36,7 +36,7 @@ class ProductItem extends StatelessWidget {
               if (!userController.isLogged()) {
                 Get.to(Login());
               } else {
-                userController.user.value.cart.add(product);
+                userController.addToCart(product);
               }
             },
           ),
