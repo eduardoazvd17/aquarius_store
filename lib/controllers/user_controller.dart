@@ -17,7 +17,18 @@ class UserController extends GetxController {
 
   bool isLogged() => user.value != null;
 
-  void addToCart(Product p) => user.value.cart.add(p);
+  void addToCart(Product p) {
+    List tempItems = user.value.cart.where((temp) => p.id == temp.id).toList();
+    if (tempItems.length == 0) {
+      user.value.cart.add(p);
+      Get.snackbar(
+        'Adicionado ao Carrinho',
+        'O produto ${p.name} foi adicionado ao carrinho de compras',
+        duration: Duration(seconds: 1),
+      );
+    }
+  }
 
-  void removeToCart(Product p) => user.value.cart.remove(p);
+  void removeToCart(Product p) =>
+      user.value.cart.removeWhere((item) => item.id == p.id);
 }
