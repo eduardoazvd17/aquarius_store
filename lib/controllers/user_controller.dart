@@ -9,10 +9,10 @@ class UserController extends GetxController {
 
   void setUser(User newUser) {
     if (newUser == null) {
-      user.value = null;
+      user.update((user) => user = null);
       UserService().deleteCredentials();
     } else {
-      user.value = newUser;
+      user.update((user) => user = newUser);
     }
   }
 
@@ -21,7 +21,7 @@ class UserController extends GetxController {
   void addToCart(Product p) {
     List tempItems = user.value.cart.where((temp) => p.id == temp.id).toList();
     if (tempItems.length == 0) {
-      user.value.cart.add(p);
+      user.update((user) => user.cart.add(p));
       Get.snackbar(
         'Adicionado ao Carrinho',
         'O produto ${p.name} foi adicionado ao carrinho de compras',
@@ -32,7 +32,7 @@ class UserController extends GetxController {
   }
 
   void removeFromCart(Product p) {
-    user.value.cart.removeWhere((item) => item.id == p.id);
+    user.update((user) => user.cart.removeWhere((item) => item.id == p.id));
     _service.updateUser(user.value);
   }
 }
