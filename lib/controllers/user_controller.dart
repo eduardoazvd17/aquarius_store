@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:aquariusstore/models/user.dart';
 
 class UserController extends GetxController {
+  final UserService _service = UserService();
   Rx<User> user = Rx();
 
   void setUser(User newUser) {
@@ -26,9 +27,12 @@ class UserController extends GetxController {
         'O produto ${p.name} foi adicionado ao carrinho de compras',
         duration: Duration(seconds: 1),
       );
+      _service.updateUser(user.value);
     }
   }
 
-  void removeToCart(Product p) =>
-      user.value.cart.removeWhere((item) => item.id == p.id);
+  void removeFromCart(Product p) {
+    user.value.cart.removeWhere((item) => item.id == p.id);
+    _service.updateUser(user.value);
+  }
 }
