@@ -9,10 +9,10 @@ class UserController extends GetxController {
 
   void setUser(User newUser) {
     if (newUser == null) {
-      user.update((user) => user = null);
+      user.value = null;
       UserService().deleteCredentials();
     } else {
-      user.update((user) => user = newUser);
+      user.value = newUser;
     }
   }
 

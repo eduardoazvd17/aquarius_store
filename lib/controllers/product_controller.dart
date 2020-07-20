@@ -11,18 +11,18 @@ class ProductController extends GetxController {
     isLoading.value = true;
     var pService = ProductService();
     List<Product> loadedProducts = await pService.loadAllProducts();
-    allProducts.update((all) => all = loadedProducts);
-    products.update((ps) => ps = loadedProducts);
-    isLoading.update((load) => load = false);
+    allProducts.value = loadedProducts;
+    products.value = allProducts.value;
+    isLoading.value = false;
   }
 
   search(String textFilter) {
     if (textFilter == null || textFilter.isEmpty) {
-      products.update((ps) => ps = allProducts.value);
+      products.value = allProducts.value;
     } else {
-      products.update((ps) => ps = allProducts.value
+      products.value = allProducts.value
           .where((p) => p.name.toLowerCase().contains(textFilter.toLowerCase()))
-          .toList());
+          .toList();
     }
   }
 }
