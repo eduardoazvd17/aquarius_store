@@ -14,11 +14,11 @@ class GenProductItem extends StatelessWidget {
     return ListTile(
       onTap: () {},
       isThreeLine: true,
-      leading: FittedBox(
-        child: Image.network(
-          product.mainImageUrl,
-          fit: BoxFit.cover,
-        ),
+      leading: Image.network(
+        product.mainImageUrl,
+        height: 50,
+        width: 50,
+        fit: BoxFit.cover,
       ),
       title: Text(
         product.name,
