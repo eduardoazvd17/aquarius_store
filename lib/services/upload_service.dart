@@ -20,6 +20,8 @@ class UploadService {
 
     if (photo != null) {
       return _uploadPhoto(photo);
+    } else {
+      return null;
     }
   }
 
@@ -46,6 +48,7 @@ class UploadService {
     } catch (e) {
       Get.snackbar('Erro no upload',
           'Não foi possivel enviar a foto. Tente novamente mais tarde.');
+      return null;
     }
   }
 }

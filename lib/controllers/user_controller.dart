@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:aquariusstore/models/user.dart';
 
 class UserController extends GetxController {
-  final UserService _service = UserService();
   Rx<User> user = Rx();
 
   void setUser(User newUser) {
