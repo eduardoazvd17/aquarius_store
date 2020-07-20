@@ -1,4 +1,4 @@
-import 'package:aquariusstore/components/badge.dart';
+import 'package:aquariusstore/components/cart_badge.dart';
 import 'package:aquariusstore/components/main_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -10,8 +10,7 @@ class GenOrders extends StatelessWidget {
         centerTitle: true,
         title: FittedBox(child: Text('Gerenciamento de Pedidos')),
         actions: <Widget>[
-          Badge(
-            value: '0',
+          CartBadge(
             child: IconButton(
               icon: Icon(Icons.shopping_cart),
               onPressed: () {},

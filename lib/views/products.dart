@@ -1,4 +1,4 @@
-import 'package:aquariusstore/components/badge.dart';
+import 'package:aquariusstore/components/cart_badge.dart';
 import 'package:aquariusstore/components/empty_list_message.dart';
 import 'package:aquariusstore/components/main_drawer.dart';
 import 'package:aquariusstore/components/product_item.dart';
@@ -20,17 +20,11 @@ class Products extends StatelessWidget {
         centerTitle: true,
         title: Text('Aquarius Store'),
         actions: <Widget>[
-          Obx(
-            () => Badge(
-              value: !userController.isLogged()
-                  ? '0'
-                  : userController.user.value.cart.length.toString(),
-              child: IconButton(
-                icon: Icon(Icons.shopping_cart),
-                onPressed: () => !userController.isLogged()
-                    ? Get.to(Login())
-                    : Get.to(Cart()),
-              ),
+          CartBadge(
+            child: IconButton(
+              icon: Icon(Icons.shopping_cart),
+              onPressed: () =>
+                  !userController.isLogged() ? Get.to(Login()) : Get.to(Cart()),
             ),
           ),
         ],

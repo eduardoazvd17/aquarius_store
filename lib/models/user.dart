@@ -1,12 +1,10 @@
 import 'dart:convert';
-import 'package:aquariusstore/models/product.dart';
 import 'package:flutter/material.dart';
 
 class User {
   String fullName;
   String email;
   String password;
-  List<Product> cart = [];
   bool isAdm;
 
   User({
@@ -22,11 +20,6 @@ class User {
     userMap.putIfAbsent('email', () => email);
     userMap.putIfAbsent('password', () => password);
     userMap.putIfAbsent('isAdm', () => isAdm);
-    List<String> pList = [];
-    for (var p in cart) {
-      pList.add(p.toJson());
-    }
-    userMap.putIfAbsent('cart', () => pList);
     return json.encode(userMap);
   }
 
@@ -36,10 +29,5 @@ class User {
     this.email = userMap['email'];
     this.password = userMap['password'];
     this.isAdm = userMap['isAdm'];
-    List<Product> pList = [];
-    for (var p in userMap['cart']) {
-      pList.add(Product.fromJson(p));
-    }
-    this.cart = pList;
   }
 }

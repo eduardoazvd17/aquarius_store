@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 
-class Badge extends StatelessWidget {
+class CartBadge extends StatelessWidget {
   final Widget child;
-  final String value;
-  final Color color;
 
-  Badge({
+  CartBadge({
     @required this.child,
-    @required this.value,
-    this.color,
   });
 
   @override
@@ -24,14 +20,14 @@ class Badge extends StatelessWidget {
             padding: EdgeInsets.all(2),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: color != null ? color : Theme.of(context).accentColor,
+              color: Theme.of(context).accentColor,
             ),
             constraints: BoxConstraints(
               minHeight: 16,
               minWidth: 16,
             ),
             child: Text(
-              value,
+              '0',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
