@@ -18,6 +18,8 @@ class AddProduct extends StatefulWidget {
 
 class _AddProductState extends State<AddProduct> {
   Product product;
+  List urls = [];
+  String main;
   _AddProductState(this.product);
   var nameController = TextEditingController();
   var priceController = TextEditingController();
@@ -33,12 +35,32 @@ class _AddProductState extends State<AddProduct> {
       nameController.text = p.name;
       priceController.text = p.price.toStringAsFixed(2);
       descriptionController.text = p.description;
+      setState(() {
+        urls = product.imagesUrl;
+        main = product.mainImageUrl;
+      });
     }
   }
 
   _setMainImage(String url) {
     setState(() {
-      product.mainImageUrl = url;
+      main = url;
+    });
+  }
+
+  _addPhoto(bool opc) async {
+    String url = await uploadService.uploadImage(opc);
+    setState(() {
+      urls.add(url);
+    });
+  }
+
+  _removePhoto(String url) {
+    setState(() {
+      if (url == main) {
+        main = null;
+      }
+      urls.remove(url);
     });
   }
 
@@ -68,10 +90,8 @@ class _AddProductState extends State<AddProduct> {
       return;
     }
 
-    if (product.mainImageUrl == null) {
-      setState(() {
-        product.mainImageUrl = product.imagesUrl[0];
-      });
+    if (main == null) {
+      main = urls[0];
     }
 
     var ps = ProductService();
@@ -79,8 +99,11 @@ class _AddProductState extends State<AddProduct> {
     product.name = name;
     product.price = double.tryParse(price);
     product.description = desc;
+    product.imagesUrl = urls;
+    product.mainImageUrl = main;
 
     if (widget.product == null) {
+      product.generateId();
       ps.addProduct(product);
     } else {
       ps.updateProduct(product);
@@ -128,7 +151,7 @@ class _AddProductState extends State<AddProduct> {
                               ),
                             )
                           : CarouselSlider(
-                              items: product.imagesUrl
+                              items: urls
                                   .map((u) => Stack(
                                         children: <Widget>[
                                           Align(
@@ -152,15 +175,13 @@ class _AddProductState extends State<AddProduct> {
                                                       color: Theme.of(context)
                                                           .errorColor,
                                                     ),
-                                                    onPressed: () {},
+                                                    onPressed: () =>
+                                                        _removePhoto(u),
                                                   ),
                                                 ),
                                                 SizedBox(
-                                                    width: u ==
-                                                            product.mainImageUrl
-                                                        ? 0
-                                                        : 10),
-                                                u == product.mainImageUrl
+                                                    width: u == main ? 0 : 10),
+                                                u == main
                                                     ? Container()
                                                     : CircleAvatar(
                                                         backgroundColor:
@@ -224,7 +245,7 @@ class _AddProductState extends State<AddProduct> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         InkWell(
-                          onTap: () {},
+                          onTap: () => _addPhoto(true),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -235,7 +256,7 @@ class _AddProductState extends State<AddProduct> {
                           ),
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () => _addPhoto(false),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,

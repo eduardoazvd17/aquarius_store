@@ -3,14 +3,29 @@ import 'dart:convert';
 import 'dart:math';
 
 class Product {
-  String id = Random().nextInt(999999999).toString();
+  String id;
   String name;
   String description;
   double price;
   List<String> imagesUrl = [];
   String mainImageUrl;
 
-  Product();
+  Product({this.name, this.description, this.price});
+
+  setMainImage(String url) => this.mainImageUrl = url;
+
+  generateId() {
+    this.id = this.name + Random().nextInt(999999999).toString();
+  }
+
+  removeImage(String url) {
+    if (mainImageUrl == url) {
+      mainImageUrl = null;
+    }
+    this.imagesUrl.remove(url);
+  }
+
+  addImage(String url) => this.imagesUrl.add(url);
 
   addImageUrl(String url) {
     this.imagesUrl.add(url);
