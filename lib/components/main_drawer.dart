@@ -139,7 +139,7 @@ class MainDrawer extends StatelessWidget {
                                       children: <Widget>[
                                         Divider(),
                                         Text(
-                                          'Gerenciamento',
+                                          'Administração',
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,

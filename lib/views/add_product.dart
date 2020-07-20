@@ -259,29 +259,53 @@ class _AddProductState extends State<AddProduct> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Imagens',
+                      'Imagens:',
                       style: TextStyle(
                         fontSize: 20,
                       ),
                     ),
                   ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: TextField(
-                          controller: urlController,
-                          decoration: InputDecoration(
-                            labelText: 'Url da imagem',
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        InkWell(
+                          onTap: () {},
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(Icons.camera_alt),
+                              Text('Camera'),
+                            ],
                           ),
                         ),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.add_photo_alternate),
-                        onPressed: _addPhoto,
-                      ),
-                    ],
+                        InkWell(
+                          onTap: () {},
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(Icons.image),
+                              Text('Galeria'),
+                            ],
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {},
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(Icons.link),
+                              Text('Link'),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  SizedBox(height: 20),
                   TextField(
                     textCapitalization: TextCapitalization.sentences,
                     controller: descriptionController,

@@ -27,6 +27,8 @@ dependencies:
   get_storage:
   crypto:
   cloud_firestore:
+  firebase_storage:
+  image_picker:
   flutter:
     sdk: flutter
 

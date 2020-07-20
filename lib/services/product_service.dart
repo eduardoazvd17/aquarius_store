@@ -5,8 +5,9 @@ class ProductService {
   var _db = Firestore.instance.collection('products');
 
   Future<bool> addProduct(Product product) async {
+    product.generateId();
     try {
-      await _db.document().setData({
+      await _db.document(product.id).setData({
         'data': product.toJson(),
       });
       return true;
@@ -40,7 +41,6 @@ class ProductService {
     final QuerySnapshot querySnapshot = await _db.getDocuments();
     for (var doc in querySnapshot.documents) {
       Product p = Product.fromJson(doc.data['data']);
-      p.id = doc.documentID;
       products.add(p);
     }
     return products;

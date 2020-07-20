@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'dart:math';
+
 class Product {
   //ID gerado automaticamente ao enviar novo produto ao firebase.
   String id;
@@ -26,9 +28,18 @@ class Product {
     this.imagesUrl.removeAt(index);
   }
 
+  String generateId() {
+    var randomCode = Random().nextInt(999999);
+    while (randomCode < 100000) {
+      randomCode *= 10;
+    }
+    this.id = name.replaceAll(' ', '') + randomCode.toString();
+    return id;
+  }
+
   String toJson() {
     Map<String, dynamic> productMap = {};
-    if (id != null) productMap.putIfAbsent('id', () => id);
+    productMap.putIfAbsent('id', () => id);
     productMap.putIfAbsent('name', () => name);
     productMap.putIfAbsent('description', () => description);
     productMap.putIfAbsent('price', () => price.toStringAsFixed(2));
