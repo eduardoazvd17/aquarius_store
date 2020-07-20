@@ -22,19 +22,21 @@ class UploadService {
     }
 
     if (photo != null) {
-      return _uploadFoto(photo, product);
+      return _uploadPhoto(photo, product);
     }
   }
 
-  Future<String> _uploadFoto(var photo, Product product) async {
+  removeImage(String productId, int index) {
+    FirebaseStorage()
+        .ref()
+        .child('/productsImage/$productId/' + index.toString())
+        .delete();
+  }
+
+  Future<String> _uploadPhoto(var photo, Product product) async {
     try {
-      var randomCode = Random().nextInt(999999);
-      while (randomCode < 100000) {
-        randomCode *= 10;
-      }
       var storageReference = FirebaseStorage().ref().child(
-            "/productsImage/" +
-                product.id +
+            '/productsImage/${product.id}/' +
                 product.imagesUrl.length.toString(),
           );
       var uploadTask = storageReference.putFile(photo);
