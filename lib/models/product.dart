@@ -1,31 +1,22 @@
 import 'dart:convert';
 
-import 'dart:math';
-
 class Product {
+  //ID gerado automaticamente ao enviar novo produto ao firebase.
   String id;
   String name;
   String description;
   double price;
-  List<String> imagesUrl = [];
+  List<String> imagesUrl;
   String mainImageUrl;
 
-  Product({this.name, this.description, this.price});
-
-  setMainImage(String url) => this.mainImageUrl = url;
-
-  generateId() {
-    this.id = this.name + Random().nextInt(999999999).toString();
-  }
-
-  removeImage(String url) {
-    if (mainImageUrl == url) {
-      mainImageUrl = null;
-    }
-    this.imagesUrl.remove(url);
-  }
-
-  addImage(String url) => this.imagesUrl.add(url);
+  Product({
+    this.id,
+    this.name,
+    this.description,
+    this.price,
+    this.imagesUrl,
+    this.mainImageUrl,
+  });
 
   addImageUrl(String url) {
     this.imagesUrl.add(url);
@@ -37,7 +28,6 @@ class Product {
 
   String toJson() {
     Map<String, dynamic> productMap = {};
-    productMap.putIfAbsent('id', () => id);
     productMap.putIfAbsent('name', () => name);
     productMap.putIfAbsent('description', () => description);
     productMap.putIfAbsent('price', () => price.toStringAsFixed(2));
@@ -48,7 +38,6 @@ class Product {
 
   Product.fromJson(String productJSON) {
     Map<String, dynamic> productMap = json.decode(productJSON);
-    this.id = productMap['id'];
     this.name = productMap['name'];
     this.description = productMap['description'];
     this.price = double.tryParse(productMap['price']);

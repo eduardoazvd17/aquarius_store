@@ -2,7 +2,6 @@ import 'package:aquariusstore/components/empty_list_message.dart';
 import 'package:aquariusstore/controllers/product_controller.dart';
 import 'package:aquariusstore/models/product.dart';
 import 'package:aquariusstore/services/product_service.dart';
-import 'package:aquariusstore/services/upload_service.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,20 +11,16 @@ class AddProduct extends StatefulWidget {
   final Product product;
   final ProductController productController = Get.find<ProductController>();
   @override
-  _AddProductState createState() =>
-      _AddProductState(product == null ? Product() : product);
+  _AddProductState createState() => _AddProductState();
 }
 
 class _AddProductState extends State<AddProduct> {
-  Product product;
-  List urls = [];
-  String main;
-  _AddProductState(this.product);
   var nameController = TextEditingController();
   var priceController = TextEditingController();
+  var urlController = TextEditingController();
   var descriptionController = TextEditingController();
-  bool loadingImage = false;
-  final uploadService = UploadService();
+  List<String> urls = [];
+  String mainUrl;
 
   @override
   void initState() {
@@ -36,31 +31,15 @@ class _AddProductState extends State<AddProduct> {
       priceController.text = p.price.toStringAsFixed(2);
       descriptionController.text = p.description;
       setState(() {
-        urls = product.imagesUrl;
-        main = product.mainImageUrl;
+        urls = p.imagesUrl;
+        mainUrl = p.mainImageUrl;
       });
     }
   }
 
   _setMainImage(String url) {
     setState(() {
-      main = url;
-    });
-  }
-
-  _addPhoto(bool opc) async {
-    String url = await uploadService.uploadImage(opc);
-    setState(() {
-      urls.add(url);
-    });
-  }
-
-  _removePhoto(String url) {
-    setState(() {
-      if (url == main) {
-        main = null;
-      }
-      urls.remove(url);
+      mainUrl = url;
     });
   }
 
@@ -69,10 +48,7 @@ class _AddProductState extends State<AddProduct> {
     String price = priceController.text.replaceAll(',', '.');
     String desc = descriptionController.text;
 
-    if (name.isEmpty ||
-        price.isEmpty ||
-        desc.isEmpty ||
-        product.imagesUrl.length == 0) {
+    if (name.isEmpty || price.isEmpty || desc.isEmpty || urls.length == 0) {
       Get.snackbar(
         'Campos não preenchidos',
         'Todos os campos devem ser preenchidos e deve ser enviado pelo menos uma imagem.',
@@ -90,27 +66,86 @@ class _AddProductState extends State<AddProduct> {
       return;
     }
 
-    if (main == null) {
-      main = urls[0];
+    if (mainUrl == null) {
+      setState(() {
+        mainUrl = urls[0];
+      });
     }
 
     var ps = ProductService();
-
-    product.name = name;
-    product.price = double.tryParse(price);
-    product.description = desc;
-    product.imagesUrl = urls;
-    product.mainImageUrl = main;
-
     if (widget.product == null) {
-      product.generateId();
+      var product = Product(
+        name: name,
+        price: double.tryParse(price),
+        description: desc,
+        imagesUrl: urls,
+        mainImageUrl: mainUrl,
+      );
       ps.addProduct(product);
     } else {
+      var product = Product(
+        id: widget.product.id,
+        name: name,
+        price: double.tryParse(price),
+        description: desc,
+        imagesUrl: urls,
+        mainImageUrl: mainUrl,
+      );
       ps.updateProduct(product);
     }
-
     widget.productController.reload();
     Get.close(1);
+  }
+
+  _addPhoto() {
+    var url = urlController.text;
+    urlController.clear();
+    if (urls.contains(url)) {
+      Get.snackbar(
+        'Imagem já adicionada',
+        'Esta url de imagem já foi inserida neste produto.',
+        backgroundColor: Theme.of(context).errorColor,
+      );
+      return;
+    }
+    if (!GetUtils.isURL(url)) {
+      Get.snackbar(
+        'Url inválida',
+        'Insira uma url de imagem válida.',
+        backgroundColor: Theme.of(context).errorColor,
+      );
+    } else {
+      setState(() {
+        urls.add(url);
+      });
+    }
+  }
+
+  _removePhoto(String url) {
+    Get.dialog(AlertDialog(
+      title: Text('Remover imagem'),
+      content: Text('Deseja realmente remover esta imagem?'),
+      actions: <Widget>[
+        FlatButton(
+          textColor: Theme.of(context).accentColor,
+          onPressed: () {
+            setState(() {
+              if (url == mainUrl) {
+                mainUrl = null;
+              }
+              urls.remove(url);
+            });
+            Get.close(1);
+          },
+          child: Text('Sim'),
+        ),
+        FlatButton(
+          textColor: Theme.of(context).accentColor,
+          onPressed: () => Get.close(1),
+          child: Text('Não'),
+        ),
+      ],
+    ));
   }
 
   @override
@@ -131,85 +166,76 @@ class _AddProductState extends State<AddProduct> {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  loadingImage
+                  urls.length == 0
                       ? Container(
                           height: 250,
-                          child: Center(
-                            child: CircularProgressIndicator(),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(Icons.camera_alt, size: 50),
+                              SizedBox(height: 10),
+                              EmptyListMessage('Nenhuma imagem adicionada'),
+                            ],
                           ),
                         )
-                      : product.imagesUrl.length == 0
-                          ? Container(
-                              height: 250,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Icon(Icons.camera_alt, size: 50),
-                                  SizedBox(height: 10),
-                                  EmptyListMessage('Nenhuma imagem adicionada'),
-                                ],
-                              ),
-                            )
-                          : CarouselSlider(
-                              items: urls
-                                  .map((u) => Stack(
-                                        children: <Widget>[
-                                          Align(
-                                            alignment: Alignment.center,
-                                            child: Image.network(
-                                              u,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          Align(
-                                            alignment: Alignment.center,
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: <Widget>[
-                                                CircleAvatar(
-                                                  backgroundColor:
-                                                      Colors.black54,
-                                                  child: IconButton(
-                                                    icon: Icon(
-                                                      Icons.delete,
-                                                      color: Theme.of(context)
-                                                          .errorColor,
-                                                    ),
-                                                    onPressed: () =>
-                                                        _removePhoto(u),
-                                                  ),
+                      : CarouselSlider(
+                          items: urls
+                              .map((u) => Stack(
+                                    children: <Widget>[
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: Image.network(
+                                          u,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            CircleAvatar(
+                                              backgroundColor: Colors.black54,
+                                              child: IconButton(
+                                                icon: Icon(
+                                                  Icons.delete,
+                                                  color: Theme.of(context)
+                                                      .errorColor,
                                                 ),
-                                                SizedBox(
-                                                    width: u == main ? 0 : 10),
-                                                u == main
-                                                    ? Container()
-                                                    : CircleAvatar(
-                                                        backgroundColor:
-                                                            Colors.black54,
-                                                        child: IconButton(
-                                                            icon: Icon(
-                                                              Icons.done,
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .primaryColor,
-                                                            ),
-                                                            onPressed: () =>
-                                                                _setMainImage(
-                                                                    u)),
-                                                      ),
-                                              ],
+                                                onPressed: () =>
+                                                    _removePhoto(u),
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ))
-                                  .toList(),
-                              options: CarouselOptions(
-                                enableInfiniteScroll: false,
-                                enlargeCenterPage: true,
-                                height: 250,
-                                autoPlay: false,
-                              ),
-                            ),
+                                            SizedBox(
+                                                width: u == mainUrl ? 0 : 10),
+                                            u == mainUrl
+                                                ? Container()
+                                                : CircleAvatar(
+                                                    backgroundColor:
+                                                        Colors.black54,
+                                                    child: IconButton(
+                                                        icon: Icon(
+                                                          Icons.done,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .primaryColor,
+                                                        ),
+                                                        onPressed: () =>
+                                                            _setMainImage(u)),
+                                                  ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ))
+                              .toList(),
+                          options: CarouselOptions(
+                            enableInfiniteScroll: false,
+                            enlargeCenterPage: true,
+                            height: 250,
+                            autoPlay: false,
+                          ),
+                        ),
                   SizedBox(height: 20),
                   TextField(
                     controller: nameController,
@@ -233,42 +259,29 @@ class _AddProductState extends State<AddProduct> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Imagens:',
+                      'Imagens',
                       style: TextStyle(
                         fontSize: 20,
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        InkWell(
-                          onTap: () => _addPhoto(true),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(Icons.camera_alt),
-                              Text('Camera'),
-                            ],
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: TextField(
+                          controller: urlController,
+                          decoration: InputDecoration(
+                            labelText: 'Url da imagem',
                           ),
                         ),
-                        InkWell(
-                          onTap: () => _addPhoto(false),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(Icons.image),
-                              Text('Galeria'),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.add_photo_alternate),
+                        onPressed: _addPhoto,
+                      ),
+                    ],
                   ),
+                  SizedBox(height: 20),
                   TextField(
                     textCapitalization: TextCapitalization.sentences,
                     controller: descriptionController,
