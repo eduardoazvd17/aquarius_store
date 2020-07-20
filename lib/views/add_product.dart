@@ -2,6 +2,7 @@ import 'package:aquariusstore/components/empty_list_message.dart';
 import 'package:aquariusstore/controllers/product_controller.dart';
 import 'package:aquariusstore/models/product.dart';
 import 'package:aquariusstore/services/product_service.dart';
+import 'package:aquariusstore/services/upload_service.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,8 +18,8 @@ class AddProduct extends StatefulWidget {
 class _AddProductState extends State<AddProduct> {
   var nameController = TextEditingController();
   var priceController = TextEditingController();
-  var urlController = TextEditingController();
   var descriptionController = TextEditingController();
+  final uploadService = UploadService();
   List<String> urls = [];
   String mainUrl;
 
@@ -97,28 +98,8 @@ class _AddProductState extends State<AddProduct> {
     Get.close(1);
   }
 
-  _addPhoto() {
-    var url = urlController.text;
-    urlController.clear();
-    if (urls.contains(url)) {
-      Get.snackbar(
-        'Imagem já adicionada',
-        'Esta url de imagem já foi inserida neste produto.',
-        backgroundColor: Theme.of(context).errorColor,
-      );
-      return;
-    }
-    if (!GetUtils.isURL(url)) {
-      Get.snackbar(
-        'Url inválida',
-        'Insira uma url de imagem válida.',
-        backgroundColor: Theme.of(context).errorColor,
-      );
-    } else {
-      setState(() {
-        urls.add(url);
-      });
-    }
+  _addPhoto(bool opc) {
+    uploadService.uploadImage(opc, widget.product);
   }
 
   _removePhoto(String url) {
@@ -133,6 +114,7 @@ class _AddProductState extends State<AddProduct> {
               if (url == mainUrl) {
                 mainUrl = null;
               }
+              uploadService.removeImage(widget.product.id, urls.indexOf(url));
               urls.remove(url);
             });
             Get.close(1);
@@ -271,7 +253,7 @@ class _AddProductState extends State<AddProduct> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         InkWell(
-                          onTap: () {},
+                          onTap: () => _addPhoto(true),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -282,24 +264,13 @@ class _AddProductState extends State<AddProduct> {
                           ),
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () => _addPhoto(false),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Icon(Icons.image),
                               Text('Galeria'),
-                            ],
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {},
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(Icons.link),
-                              Text('Link'),
                             ],
                           ),
                         ),
