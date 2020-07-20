@@ -19,6 +19,7 @@ class _AddProductState extends State<AddProduct> {
   var nameController = TextEditingController();
   var priceController = TextEditingController();
   var descriptionController = TextEditingController();
+  bool loadingImage = false;
   final uploadService = UploadService();
   List<String> urls = [];
   String mainUrl;
@@ -98,8 +99,15 @@ class _AddProductState extends State<AddProduct> {
     Get.close(1);
   }
 
-  _addPhoto(bool opc) {
-    uploadService.uploadImage(opc, widget.product);
+  _addPhoto(bool opc) async {
+    setState(() {
+      loadingImage = true;
+    });
+    String url = await uploadService.uploadImage(opc, widget.product);
+    setState(() {
+      urls.add(url);
+      loadingImage = false;
+    });
   }
 
   _removePhoto(String url) {
@@ -148,76 +156,86 @@ class _AddProductState extends State<AddProduct> {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  urls.length == 0
+                  loadingImage
                       ? Container(
                           height: 250,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(Icons.camera_alt, size: 50),
-                              SizedBox(height: 10),
-                              EmptyListMessage('Nenhuma imagem adicionada'),
-                            ],
+                          child: Center(
+                            child: CircularProgressIndicator(),
                           ),
                         )
-                      : CarouselSlider(
-                          items: urls
-                              .map((u) => Stack(
-                                    children: <Widget>[
-                                      Align(
-                                        alignment: Alignment.center,
-                                        child: Image.network(
-                                          u,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.center,
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            CircleAvatar(
-                                              backgroundColor: Colors.black54,
-                                              child: IconButton(
-                                                icon: Icon(
-                                                  Icons.delete,
-                                                  color: Theme.of(context)
-                                                      .errorColor,
-                                                ),
-                                                onPressed: () =>
-                                                    _removePhoto(u),
-                                              ),
+                      : urls.length == 0
+                          ? Container(
+                              height: 250,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(Icons.camera_alt, size: 50),
+                                  SizedBox(height: 10),
+                                  EmptyListMessage('Nenhuma imagem adicionada'),
+                                ],
+                              ),
+                            )
+                          : CarouselSlider(
+                              items: urls
+                                  .map((u) => Stack(
+                                        children: <Widget>[
+                                          Align(
+                                            alignment: Alignment.center,
+                                            child: Image.network(
+                                              u,
+                                              fit: BoxFit.cover,
                                             ),
-                                            SizedBox(
-                                                width: u == mainUrl ? 0 : 10),
-                                            u == mainUrl
-                                                ? Container()
-                                                : CircleAvatar(
-                                                    backgroundColor:
-                                                        Colors.black54,
-                                                    child: IconButton(
-                                                        icon: Icon(
-                                                          Icons.done,
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .primaryColor,
-                                                        ),
-                                                        onPressed: () =>
-                                                            _setMainImage(u)),
+                                          ),
+                                          Align(
+                                            alignment: Alignment.center,
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: <Widget>[
+                                                CircleAvatar(
+                                                  backgroundColor:
+                                                      Colors.black54,
+                                                  child: IconButton(
+                                                    icon: Icon(
+                                                      Icons.delete,
+                                                      color: Theme.of(context)
+                                                          .errorColor,
+                                                    ),
+                                                    onPressed: () =>
+                                                        _removePhoto(u),
                                                   ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ))
-                              .toList(),
-                          options: CarouselOptions(
-                            enableInfiniteScroll: false,
-                            enlargeCenterPage: true,
-                            height: 250,
-                            autoPlay: false,
-                          ),
-                        ),
+                                                ),
+                                                SizedBox(
+                                                    width:
+                                                        u == mainUrl ? 0 : 10),
+                                                u == mainUrl
+                                                    ? Container()
+                                                    : CircleAvatar(
+                                                        backgroundColor:
+                                                            Colors.black54,
+                                                        child: IconButton(
+                                                            icon: Icon(
+                                                              Icons.done,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColor,
+                                                            ),
+                                                            onPressed: () =>
+                                                                _setMainImage(
+                                                                    u)),
+                                                      ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ))
+                                  .toList(),
+                              options: CarouselOptions(
+                                enableInfiniteScroll: false,
+                                enlargeCenterPage: true,
+                                height: 250,
+                                autoPlay: false,
+                              ),
+                            ),
                   SizedBox(height: 20),
                   TextField(
                     controller: nameController,
