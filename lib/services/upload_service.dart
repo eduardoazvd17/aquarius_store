@@ -1,12 +1,9 @@
-import 'dart:math';
-
-import 'package:aquariusstore/models/product.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UploadService {
-  Future<String> uploadImage(bool opc, Product product) async {
+  Future<String> uploadImage({bool opc, String productId, int index}) async {
     var photo;
     try {
       if (opc) {
@@ -20,22 +17,21 @@ class UploadService {
     }
 
     if (photo != null) {
-      return _uploadPhoto(photo, product);
+      return _uploadPhoto(photo, productId, index);
     }
   }
 
   removeImage(String productId, int index) {
     FirebaseStorage()
         .ref()
-        .child('/productsImage/$productId/' + index.toString())
+        .child('/products/$productId/images/' + index.toString())
         .delete();
   }
 
-  Future<String> _uploadPhoto(var photo, Product product) async {
+  Future<String> _uploadPhoto(var photo, String productId, int index) async {
     try {
       var storageReference = FirebaseStorage().ref().child(
-            '/productsImage/${product.id}/' +
-                product.imagesUrl.length.toString(),
+            '/products/${productId}/images/' + index.toString(),
           );
       var uploadTask = storageReference.putFile(photo);
       await uploadTask.onComplete;

@@ -5,7 +5,6 @@ class ProductService {
   var _db = Firestore.instance.collection('products');
 
   Future<bool> addProduct(Product product) async {
-    product.generateId();
     try {
       await _db.document(product.id).setData({
         'data': product.toJson(),

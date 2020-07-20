@@ -12,17 +12,18 @@ class AddProduct extends StatefulWidget {
   final Product product;
   final ProductController productController = Get.find<ProductController>();
   @override
-  _AddProductState createState() => _AddProductState();
+  _AddProductState createState() =>
+      _AddProductState(product == null ? Product() : product);
 }
 
 class _AddProductState extends State<AddProduct> {
+  Product product;
+  _AddProductState(this.product);
   var nameController = TextEditingController();
   var priceController = TextEditingController();
   var descriptionController = TextEditingController();
   bool loadingImage = false;
   final uploadService = UploadService();
-  List<String> urls = [];
-  String mainUrl;
 
   @override
   void initState() {
@@ -32,16 +33,12 @@ class _AddProductState extends State<AddProduct> {
       nameController.text = p.name;
       priceController.text = p.price.toStringAsFixed(2);
       descriptionController.text = p.description;
-      setState(() {
-        urls = p.imagesUrl;
-        mainUrl = p.mainImageUrl;
-      });
     }
   }
 
   _setMainImage(String url) {
     setState(() {
-      mainUrl = url;
+      product.mainImageUrl = url;
     });
   }
 
@@ -50,7 +47,10 @@ class _AddProductState extends State<AddProduct> {
     String price = priceController.text.replaceAll(',', '.');
     String desc = descriptionController.text;
 
-    if (name.isEmpty || price.isEmpty || desc.isEmpty || urls.length == 0) {
+    if (name.isEmpty ||
+        price.isEmpty ||
+        desc.isEmpty ||
+        product.imagesUrl.length == 0) {
       Get.snackbar(
         'Campos não preenchidos',
         'Todos os campos devem ser preenchidos e deve ser enviado pelo menos uma imagem.',
@@ -68,74 +68,26 @@ class _AddProductState extends State<AddProduct> {
       return;
     }
 
-    if (mainUrl == null) {
+    if (product.mainImageUrl == null) {
       setState(() {
-        mainUrl = urls[0];
+        product.mainImageUrl = product.imagesUrl[0];
       });
     }
 
     var ps = ProductService();
+
+    product.name = name;
+    product.price = double.tryParse(price);
+    product.description = desc;
+
     if (widget.product == null) {
-      var product = Product(
-        name: name,
-        price: double.tryParse(price),
-        description: desc,
-        imagesUrl: urls,
-        mainImageUrl: mainUrl,
-      );
       ps.addProduct(product);
     } else {
-      var product = Product(
-        id: widget.product.id,
-        name: name,
-        price: double.tryParse(price),
-        description: desc,
-        imagesUrl: urls,
-        mainImageUrl: mainUrl,
-      );
       ps.updateProduct(product);
     }
+
     widget.productController.reload();
     Get.close(1);
-  }
-
-  _addPhoto(bool opc) async {
-    setState(() {
-      loadingImage = true;
-    });
-    String url = await uploadService.uploadImage(opc, widget.product);
-    setState(() {
-      if (url != null) urls.add(url);
-      loadingImage = false;
-    });
-  }
-
-  _removePhoto(String url) {
-    Get.dialog(AlertDialog(
-      title: Text('Remover imagem'),
-      content: Text('Deseja realmente remover esta imagem?'),
-      actions: <Widget>[
-        FlatButton(
-          textColor: Theme.of(context).accentColor,
-          onPressed: () {
-            setState(() {
-              if (url == mainUrl) {
-                mainUrl = null;
-              }
-              uploadService.removeImage(widget.product.id, urls.indexOf(url));
-              urls.remove(url);
-            });
-            Get.close(1);
-          },
-          child: Text('Sim'),
-        ),
-        FlatButton(
-          textColor: Theme.of(context).accentColor,
-          onPressed: () => Get.close(1),
-          child: Text('Não'),
-        ),
-      ],
-    ));
   }
 
   @override
@@ -163,7 +115,7 @@ class _AddProductState extends State<AddProduct> {
                             child: CircularProgressIndicator(),
                           ),
                         )
-                      : urls.length == 0
+                      : product.imagesUrl.length == 0
                           ? Container(
                               height: 250,
                               child: Column(
@@ -176,7 +128,7 @@ class _AddProductState extends State<AddProduct> {
                               ),
                             )
                           : CarouselSlider(
-                              items: urls
+                              items: product.imagesUrl
                                   .map((u) => Stack(
                                         children: <Widget>[
                                           Align(
@@ -200,14 +152,15 @@ class _AddProductState extends State<AddProduct> {
                                                       color: Theme.of(context)
                                                           .errorColor,
                                                     ),
-                                                    onPressed: () =>
-                                                        _removePhoto(u),
+                                                    onPressed: () {},
                                                   ),
                                                 ),
                                                 SizedBox(
-                                                    width:
-                                                        u == mainUrl ? 0 : 10),
-                                                u == mainUrl
+                                                    width: u ==
+                                                            product.mainImageUrl
+                                                        ? 0
+                                                        : 10),
+                                                u == product.mainImageUrl
                                                     ? Container()
                                                     : CircleAvatar(
                                                         backgroundColor:
@@ -271,7 +224,7 @@ class _AddProductState extends State<AddProduct> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         InkWell(
-                          onTap: () => _addPhoto(true),
+                          onTap: () {},
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -282,7 +235,7 @@ class _AddProductState extends State<AddProduct> {
                           ),
                         ),
                         InkWell(
-                          onTap: () => _addPhoto(false),
+                          onTap: () {},
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,

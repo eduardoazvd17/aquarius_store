@@ -3,22 +3,14 @@ import 'dart:convert';
 import 'dart:math';
 
 class Product {
-  //ID gerado automaticamente ao enviar novo produto ao firebase.
-  String id;
+  String id = Random().nextInt(999999999).toString();
   String name;
   String description;
   double price;
-  List<String> imagesUrl;
+  List<String> imagesUrl = [];
   String mainImageUrl;
 
-  Product({
-    this.id,
-    this.name,
-    this.description,
-    this.price,
-    this.imagesUrl,
-    this.mainImageUrl,
-  });
+  Product();
 
   addImageUrl(String url) {
     this.imagesUrl.add(url);
@@ -26,15 +18,6 @@ class Product {
 
   removeImageUrl(int index) {
     this.imagesUrl.removeAt(index);
-  }
-
-  String generateId() {
-    var randomCode = Random().nextInt(999999);
-    while (randomCode < 100000) {
-      randomCode *= 10;
-    }
-    this.id = name.replaceAll(' ', '') + randomCode.toString();
-    return id;
   }
 
   String toJson() {
