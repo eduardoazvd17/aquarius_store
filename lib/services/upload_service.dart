@@ -10,10 +10,8 @@ class UploadService {
     var photo;
     try {
       if (opc) {
-        //true
         photo = await ImagePicker.pickImage(source: ImageSource.camera);
       } else {
-        //false
         photo = await ImagePicker.pickImage(source: ImageSource.gallery);
       }
     } catch (e) {
@@ -44,7 +42,7 @@ class UploadService {
       return await storageReference.getDownloadURL();
     } catch (e) {
       Get.snackbar('Erro no upload',
-          'Não foi possivel enviar a foto. Tente nvoamente mais tarde.');
+          'Não foi possivel enviar a foto. Tente novamente mais tarde.');
     }
   }
 }

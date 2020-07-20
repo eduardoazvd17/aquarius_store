@@ -105,7 +105,7 @@ class _AddProductState extends State<AddProduct> {
     });
     String url = await uploadService.uploadImage(opc, widget.product);
     setState(() {
-      urls.add(url);
+      if (url != null) urls.add(url);
       loadingImage = false;
     });
   }
