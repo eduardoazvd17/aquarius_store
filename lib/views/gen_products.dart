@@ -9,18 +9,25 @@ import 'package:get/get.dart';
 
 class GenProducts extends StatelessWidget {
   final productController = Get.find<ProductController>();
+
+  _add() {
+    Get.to(AddProduct()).then((value) => productController.reload());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: _add,
+        child: Icon(Icons.add),
+      ),
       appBar: AppBar(
         centerTitle: true,
         title: FittedBox(child: Text('Gerenciamento de Produtos')),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: () => Get.to(
-              AddProduct(),
-            ),
+            onPressed: _add,
           ),
         ],
       ),

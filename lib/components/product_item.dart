@@ -1,3 +1,4 @@
+import 'package:aquariusstore/components/no_image.dart';
 import 'package:aquariusstore/controllers/user_controller.dart';
 import 'package:aquariusstore/models/product.dart';
 import 'package:aquariusstore/views/login.dart';
@@ -14,10 +15,12 @@ class ProductItem extends StatelessWidget {
     return InkWell(
       onTap: () => Get.to(ProductDetails(product)),
       child: GridTile(
-        child: Image.network(
-          '${product.mainImageUrl}',
-          fit: BoxFit.cover,
-        ),
+        child: product.mainImageUrl == null
+            ? NoImage()
+            : Image.network(
+                '${product.mainImageUrl}',
+                fit: BoxFit.cover,
+              ),
         footer: GridTileBar(
           backgroundColor: Colors.black54,
           subtitle: Text('R\$${product.price.toStringAsFixed(2)}'),

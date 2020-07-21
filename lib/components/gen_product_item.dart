@@ -1,3 +1,4 @@
+import 'package:aquariusstore/components/no_image.dart';
 import 'package:aquariusstore/controllers/product_controller.dart';
 import 'package:aquariusstore/models/product.dart';
 import 'package:aquariusstore/services/product_service.dart';
@@ -14,11 +15,15 @@ class GenProductItem extends StatelessWidget {
     return ListTile(
       onTap: () {},
       isThreeLine: true,
-      leading: Image.network(
-        product.mainImageUrl,
-        height: 50,
-        width: 50,
-        fit: BoxFit.cover,
+      leading: FittedBox(
+        child: product.mainImageUrl == null
+            ? NoImage()
+            : Image.network(
+                product.mainImageUrl,
+                height: 50,
+                width: 50,
+                fit: BoxFit.cover,
+              ),
       ),
       title: Text(
         product.name,

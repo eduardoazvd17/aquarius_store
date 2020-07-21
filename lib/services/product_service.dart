@@ -40,7 +40,6 @@ class ProductService {
     final QuerySnapshot querySnapshot = await _db.getDocuments();
     for (var doc in querySnapshot.documents) {
       Product p = Product.fromJson(doc.data['data']);
-      //Atribuindo id automático do firebase ao modelo.
       p.id = doc.documentID;
       products.add(p);
     }
