@@ -35,7 +35,15 @@ class GenProductItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           IconButton(
-            icon: Icon(Icons.edit),
+            icon: Icon(
+              Icons.camera_alt,
+            ),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.edit,
+            ),
             onPressed: () => Get.to(
               AddProduct(
                 product: this.product,
@@ -43,7 +51,10 @@ class GenProductItem extends StatelessWidget {
             ),
           ),
           IconButton(
-            icon: Icon(Icons.close),
+            icon: Icon(
+              Icons.close,
+              color: Theme.of(context).errorColor,
+            ),
             onPressed: () {
               Get.dialog(
                 AlertDialog(
