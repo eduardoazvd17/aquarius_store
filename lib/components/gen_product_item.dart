@@ -2,6 +2,7 @@ import 'package:aquariusstore/components/no_image.dart';
 import 'package:aquariusstore/controllers/product_controller.dart';
 import 'package:aquariusstore/models/product.dart';
 import 'package:aquariusstore/services/product_service.dart';
+import 'package:aquariusstore/views/add_photos.dart';
 import 'package:aquariusstore/views/add_product.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -38,16 +39,14 @@ class GenProductItem extends StatelessWidget {
             icon: Icon(
               Icons.camera_alt,
             ),
-            onPressed: () {},
+            onPressed: () => Get.to(AddPhotos(product: product)),
           ),
           IconButton(
             icon: Icon(
               Icons.edit,
             ),
             onPressed: () => Get.to(
-              AddProduct(
-                product: this.product,
-              ),
+              AddProduct(product: this.product),
             ),
           ),
           IconButton(
