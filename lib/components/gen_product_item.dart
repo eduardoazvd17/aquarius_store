@@ -2,6 +2,7 @@ import 'package:aquariusstore/components/no_image.dart';
 import 'package:aquariusstore/controllers/product_controller.dart';
 import 'package:aquariusstore/models/product.dart';
 import 'package:aquariusstore/services/product_service.dart';
+import 'package:aquariusstore/services/upload_service.dart';
 import 'package:aquariusstore/views/add_photos.dart';
 import 'package:aquariusstore/views/add_product.dart';
 import 'package:flutter/material.dart';
@@ -63,6 +64,7 @@ class GenProductItem extends StatelessWidget {
                   actions: <Widget>[
                     FlatButton(
                       onPressed: () {
+                        UploadService().removeImages(product.imagesUrl);
                         ProductService().removeProduct(product);
                         productController.reload();
                         Get.close(1);
