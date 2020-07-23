@@ -8,10 +8,11 @@ class UploadService {
   Future<String> uploadImage(bool opc) async {
     var photo;
     try {
+      var picker = ImagePicker();
       if (opc) {
-        photo = await ImagePicker.pickImage(source: ImageSource.camera);
+        photo = await picker.getImage(source: ImageSource.camera);
       } else {
-        photo = await ImagePicker.pickImage(source: ImageSource.gallery);
+        photo = await picker.getImage(source: ImageSource.gallery);
       }
     } catch (e) {
       Get.snackbar('Permissão negada',
