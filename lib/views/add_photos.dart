@@ -6,6 +6,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'add_product.dart';
+
 class AddPhotos extends StatefulWidget {
   AddPhotos({this.product});
   final Product product;
@@ -58,6 +60,8 @@ class _AddPhotosState extends State<AddPhotos> {
     setState(() {
       product.setMainImage(url);
     });
+    Get.snackbar('Imagem principal alterada',
+        'Esta imagem será exibida na miniatura do produto.');
     widget.ps.updateProduct(product);
   }
 
