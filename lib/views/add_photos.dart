@@ -48,10 +48,14 @@ class _AddPhotosState extends State<AddPhotos> {
   _removePhoto(String url) {
     widget.us.removeImage(url);
     setState(() {
-      if (product.mainImageUrl == url) {
-        product.mainImageUrl = null;
-      }
       product.removeImage(url);
+      if (product.mainImageUrl == url) {
+        if (product.imagesUrl.length == 0) {
+          product.mainImageUrl = null;
+        } else {
+          product.mainImageUrl = product.imagesUrl[0];
+        }
+      }
     });
     widget.ps.updateProduct(product);
   }
