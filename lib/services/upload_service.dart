@@ -40,7 +40,7 @@ class UploadService {
   Future<String> _uploadPhoto(var photo) async {
     try {
       var storageReference = FirebaseStorage().ref().child(
-            '/products/images/' + Random().nextInt(999999999).toString(),
+            '/images/products/' + Random().nextInt(999999999).toString(),
           );
       var uploadTask = storageReference.putFile(photo);
       await uploadTask.onComplete;
