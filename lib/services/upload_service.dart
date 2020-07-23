@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:firebase_storage/firebase_storage.dart';
@@ -6,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 
 class UploadService {
   Future<String> uploadImage(bool opc) async {
-    var photo;
+    PickedFile photo;
     try {
       var picker = ImagePicker();
       if (opc) {
@@ -20,7 +21,7 @@ class UploadService {
     }
 
     if (photo != null) {
-      return _uploadPhoto(photo);
+      return _uploadPhoto(File(photo.path));
     } else {
       return null;
     }
