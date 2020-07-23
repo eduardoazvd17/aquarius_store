@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Este app utiliza a camera apenas para enviar administrar fotos de produtos</string>
+	<string>Este app utiliza a camera apenas para enviar fotos de produtos</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Este app utiliza a galeria apenas para enviar administrar fotos de produtos</string>
+	<string>Este app utiliza a galeria apenas para enviar fotos de produtos</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
