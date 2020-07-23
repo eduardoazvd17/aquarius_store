@@ -15,12 +15,15 @@ class ProductItem extends StatelessWidget {
     return InkWell(
       onTap: () => Get.to(ProductDetails(product)),
       child: GridTile(
-        child: product.mainImageUrl == null
-            ? NoImage()
-            : Image.network(
-                '${product.mainImageUrl}',
-                fit: BoxFit.cover,
-              ),
+        child: Hero(
+          tag: product.id,
+          child: product.mainImageUrl == null
+              ? NoImage()
+              : Image.network(
+                  '${product.mainImageUrl}',
+                  fit: BoxFit.cover,
+                ),
+        ),
         footer: GridTileBar(
           backgroundColor: Colors.black54,
           subtitle: Text('R\$${product.price.toStringAsFixed(2)}'),

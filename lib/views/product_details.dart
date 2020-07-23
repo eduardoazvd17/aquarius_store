@@ -1,3 +1,4 @@
+import 'package:aquariusstore/components/no_image.dart';
 import 'package:aquariusstore/controllers/user_controller.dart';
 import 'package:aquariusstore/models/product.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,22 @@ class ProductDetails extends StatelessWidget {
       ),
       body: LayoutBuilder(
         builder: (ctx, cnt) {
-          return Container();
+          return Container(
+            width: double.infinity,
+            height: 300,
+            child: Hero(
+              tag: product.id,
+              child: FittedBox(
+                fit: BoxFit.cover,
+                child: product.mainImageUrl == null
+                    ? NoImage()
+                    : Image.network(
+                        '${product.mainImageUrl}',
+                        fit: BoxFit.cover,
+                      ),
+              ),
+            ),
+          );
         },
       ),
     );
