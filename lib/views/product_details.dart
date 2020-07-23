@@ -77,18 +77,17 @@ class ProductDetails extends StatelessWidget {
                   SizedBox(height: 10),
                   Row(
                     children: <Widget>[
-                      Expanded(
-                        child: FlatButton(
-                          color: Theme.of(context).accentColor,
-                          textColor: Colors.white,
-                          onPressed: () {},
-                          child: Row(
-                            children: <Widget>[
-                              Icon(Icons.add_shopping_cart),
-                              SizedBox(width: 5),
-                              Text('Adicionar ao Carrinho'),
-                            ],
-                          ),
+                      FlatButton(
+                        color: Theme.of(context).accentColor,
+                        textColor: Colors.white,
+                        onPressed: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(Icons.add_shopping_cart),
+                            SizedBox(width: 5),
+                            Text('Adicionar ao Carrinho'),
+                          ],
                         ),
                       ),
                     ],
