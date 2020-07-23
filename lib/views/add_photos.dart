@@ -40,6 +40,10 @@ class _AddPhotosState extends State<AddPhotos> {
         loadingImage = false;
       });
       widget.ps.updateProduct(product);
+    } else {
+      setState(() {
+        loadingImage = false;
+      });
     }
   }
 
