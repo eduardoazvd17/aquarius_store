@@ -16,6 +16,7 @@ class ProductItem extends StatelessWidget {
       onTap: () => Get.to(ProductDetails(product)),
       child: GridTile(
         child: Hero(
+          transitionOnUserGestures: true,
           tag: product.id,
           child: product.mainImageUrl == null
               ? NoImage()

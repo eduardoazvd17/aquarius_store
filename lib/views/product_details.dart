@@ -21,6 +21,7 @@ class ProductDetails extends StatelessWidget {
             width: double.infinity,
             height: 300,
             child: Hero(
+              transitionOnUserGestures: true,
               tag: product.id,
               child: FittedBox(
                 fit: BoxFit.cover,
