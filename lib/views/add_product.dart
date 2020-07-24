@@ -15,6 +15,7 @@ class _AddProductState extends State<AddProduct> {
   final nameController = TextEditingController();
   final priceController = TextEditingController();
   final descriptionController = TextEditingController();
+  final quantityController = TextEditingController();
 
   @override
   void initState() {
@@ -24,6 +25,7 @@ class _AddProductState extends State<AddProduct> {
       nameController.text = p.name;
       priceController.text = p.price.toStringAsFixed(2);
       descriptionController.text = p.description;
+      quantityController.text = p.quantity.toString();
     }
   }
 
@@ -32,8 +34,12 @@ class _AddProductState extends State<AddProduct> {
     String name = nameController.text;
     double price = double.tryParse(priceController.text.replaceAll(',', '.'));
     String description = descriptionController.text;
+    int quantity = int.tryParse(quantityController.text);
 
-    if (name.isEmpty || price == null || description.isEmpty) {
+    if (name.isEmpty ||
+        price == null ||
+        description.isEmpty ||
+        quantity == null) {
       Get.snackbar(
         'Campos vazios',
         'Preencha todos os campos necessários.',
@@ -47,6 +53,7 @@ class _AddProductState extends State<AddProduct> {
         name: name,
         price: price,
         description: description,
+        quantity: quantity,
       );
       ps.addProduct(product);
     } else {
@@ -54,6 +61,7 @@ class _AddProductState extends State<AddProduct> {
       product.name = name;
       product.price = price;
       product.description = description;
+      product.quantity = quantity;
       ps.updateProduct(product);
     }
     Get.close(1);
@@ -92,6 +100,13 @@ class _AddProductState extends State<AddProduct> {
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
                   labelText: 'Preço',
+                ),
+              ),
+              TextField(
+                controller: quantityController,
+                keyboardType: TextInputType.numberWithOptions(decimal: false),
+                decoration: InputDecoration(
+                  labelText: 'Quantidade em estoque',
                 ),
               ),
               TextField(
