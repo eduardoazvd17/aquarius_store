@@ -113,14 +113,21 @@ class ProductDetails extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 5),
+                  Text(
+                    'Quantidade em estoque: ' + product.quantity.toString(),
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(height: 10),
                   Text(
                     product.description,
                     style: TextStyle(
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(height: 10),
                 ],
               ),
             ),
