@@ -1,4 +1,3 @@
-import 'package:aquariusstore/components/no_image.dart';
 import 'package:aquariusstore/controllers/user_controller.dart';
 import 'package:aquariusstore/models/product.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -17,8 +16,14 @@ class ProductDetails extends StatelessWidget {
         centerTitle: false,
       ),
       bottomSheet: Container(
+        decoration: BoxDecoration(
+          color: Colors.blueGrey[100],
+          borderRadius: new BorderRadius.only(
+            topLeft: const Radius.circular(20),
+            topRight: const Radius.circular(20),
+          ),
+        ),
         height: 80,
-        color: Colors.black12,
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(20),
@@ -30,6 +35,7 @@ class ProductDetails extends StatelessWidget {
                     'R\$' + product.price.toStringAsFixed(2),
                     style: TextStyle(
                       fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -61,13 +67,24 @@ class ProductDetails extends StatelessWidget {
                 transitionOnUserGestures: true,
                 tag: product.id,
                 child: product.imagesUrl.length == 0
-                    ? FittedBox(fit: BoxFit.cover, child: NoImage())
+                    ? Container(
+                        height: 300,
+                        width: 350,
+                        child: Image.asset(
+                          'assets/images/noimage.png',
+                          fit: BoxFit.cover,
+                        ),
+                      )
                     : CarouselSlider(
                         items: product.imagesUrl
                             .map(
-                              (u) => Image.network(
-                                u,
-                                fit: BoxFit.cover,
+                              (u) => Container(
+                                height: 300,
+                                width: 350,
+                                child: Image.network(
+                                  u,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             )
                             .toList(),
@@ -82,7 +99,6 @@ class ProductDetails extends StatelessWidget {
                       ),
               ),
             ),
-            SizedBox(height: 20),
             Padding(
               padding: EdgeInsets.all(20),
               child: Column(
