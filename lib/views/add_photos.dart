@@ -112,9 +112,13 @@ class _AddPhotosState extends State<AddPhotos> {
                                     children: <Widget>[
                                       Align(
                                         alignment: Alignment.center,
-                                        child: Image.network(
-                                          u,
-                                          fit: BoxFit.cover,
+                                        child: Container(
+                                          height: 300,
+                                          width: 350,
+                                          child: Image.network(
+                                            u,
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
                                       Align(

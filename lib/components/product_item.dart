@@ -1,4 +1,3 @@
-import 'package:aquariusstore/components/no_image.dart';
 import 'package:aquariusstore/controllers/user_controller.dart';
 import 'package:aquariusstore/models/product.dart';
 import 'package:aquariusstore/views/login.dart';
@@ -19,7 +18,10 @@ class ProductItem extends StatelessWidget {
           transitionOnUserGestures: true,
           tag: product.id,
           child: product.mainImageUrl == null
-              ? NoImage()
+              ? Image.asset(
+                  'assets/images/noimage.png',
+                  fit: BoxFit.cover,
+                )
               : Image.network(
                   '${product.mainImageUrl}',
                   fit: BoxFit.cover,
