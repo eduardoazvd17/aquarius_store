@@ -12,7 +12,45 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('Detalhes do Produto'),
+        centerTitle: false,
+      ),
+      bottomSheet: Container(
+        height: 80,
+        color: Colors.black12,
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: Text(
+                    'R\$' + product.price.toStringAsFixed(2),
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                FlatButton(
+                  color: Theme.of(context).accentColor,
+                  textColor: Colors.white,
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Icon(Icons.shopping_cart),
+                      SizedBox(width: 5),
+                      Text('Adicionar ao Carrinho'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -61,37 +99,12 @@ class ProductDetails extends StatelessWidget {
                   ),
                   SizedBox(height: 5),
                   Text(
-                    'R\$' + product.price.toStringAsFixed(2),
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
                     product.description,
                     style: TextStyle(
                       fontSize: 16,
                     ),
                   ),
                   SizedBox(height: 10),
-                  Row(
-                    children: <Widget>[
-                      FlatButton(
-                        color: Theme.of(context).accentColor,
-                        textColor: Colors.white,
-                        onPressed: () {},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(Icons.add_shopping_cart),
-                            SizedBox(width: 5),
-                            Text('Adicionar ao Carrinho'),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),
